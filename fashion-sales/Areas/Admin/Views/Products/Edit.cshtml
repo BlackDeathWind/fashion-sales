@@ -1,0 +1,73 @@
+@model ProductFormViewModel
+@{
+    Layout = "/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Sửa sản phẩm";
+}
+
+<h1 class="h4 mb-3">Sửa sản phẩm</h1>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="CategoryId" class="form-label"></label>
+        <select asp-for="CategoryId" asp-items="Model.Categories" class="form-select"></select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label asp-for="Price" class="form-label"></label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="DiscountPrice" class="form-label"></label>
+            <input asp-for="DiscountPrice" class="form-control" />
+            <span asp-validation-for="DiscountPrice" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="StockQuantity" class="form-label"></label>
+            <input asp-for="StockQuantity" class="form-control" />
+            <span asp-validation-for="StockQuantity" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="mb-3 form-check">
+        <input asp-for="IsActive" class="form-check-input" />
+        <label asp-for="IsActive" class="form-check-label"></label>
+    </div>
+
+    @if (Model.ExistingProduct != null && !string.IsNullOrEmpty(Model.ExistingProduct.MainImageUrl))
+    {
+        <div class="mb-3">
+            <label class="form-label">Ảnh hiện tại</label>
+            <div class="ratio ratio-4x3 bg-light rounded" style="max-width:200px;">
+                <img src="@Model.ExistingProduct.MainImageUrl" class="img-fluid rounded" alt="@Model.Name" />
+            </div>
+        </div>
+    }
+
+    <div class="mb-3">
+        <label asp-for="MainImage" class="form-label">Ảnh chính mới (tùy chọn)</label>
+        <input asp-for="MainImage" type="file" class="form-control" />
+        <span asp-validation-for="MainImage" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-dark">Lưu</button>
+    <a asp-action="Index" class="btn btn-outline-secondary ms-2">Hủy</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

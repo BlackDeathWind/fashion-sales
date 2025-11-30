@@ -1,0 +1,49 @@
+@model ProductListViewModel
+@{
+    ViewData["Title"] = "Tìm kiếm";
+}
+
+<h1 class="h4 mb-3">Kết quả tìm kiếm cho: "@Model.SearchTerm"</h1>
+
+<div class="row g-4">
+    @if (!Model.Products.Any())
+    {
+        <p>Không tìm thấy sản phẩm phù hợp.</p>
+    }
+    else
+    {
+        foreach (var p in Model.Products)
+        {
+            <div class="col-6 col-md-3">
+                <div class="card product-card h-100">
+                    <a asp-controller="Product" asp-action="Details" asp-route-id="@p.Id" class="text-decoration-none text-dark">
+                        <div class="ratio ratio-4x3 bg-light rounded-top">
+                            @if (!string.IsNullOrEmpty(p.MainImageUrl))
+                            {
+                                <img src="@p.MainImageUrl" class="img-fluid rounded-top" alt="@p.Name" />
+                            }
+                            else
+                            {
+                                <span class="text-muted d-flex align-items-center justify-content-center">Ảnh sản phẩm</span>
+                            }
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title small mb-1">@p.Name</h5>
+                            <p class="card-text fw-bold mb-2 text-danger">
+                                @String.Format("{0:N0}₫", p.DiscountPrice ?? p.Price)
+                            </p>
+                        </div>
+                    </a>
+                    <div class="card-footer bg-white border-0 pb-3 px-3">
+                        <form asp-controller="Cart" asp-action="Add" method="post" class="d-grid">
+                            <input type="hidden" name="productId" value="@p.Id" />
+                            <button type="submit" class="btn btn-sm btn-outline-dark">Thêm vào giỏ</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+

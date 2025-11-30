@@ -1,0 +1,20 @@
+@model Order
+@{
+    ViewData["Title"] = "Đặt hàng thành công";
+}
+
+<div class="text-center my-5">
+    <h1 class="h3 mb-3">Đặt hàng thành công</h1>
+    <p class="mb-4">
+        Cảm ơn bạn đã mua sắm tại <strong>Fashion Sales</strong>!<br />
+        Mã đơn hàng của bạn là: <strong>@Model.OrderCode</strong>.
+    </p>
+    <p class="text-muted mb-4">
+        Nhân viên sẽ liên hệ và xử lý đơn hàng trong thời gian sớm nhất.<br />
+        Bạn có thể theo dõi trạng thái đơn hàng trong mục <a asp-action="MyOrders">Đơn hàng của tôi</a>.
+    </p>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-dark me-2">Tiếp tục mua sắm</a>
+    <a asp-action="MyOrders" class="btn btn-outline-dark">Đơn hàng của tôi</a>
+</div>
+
+

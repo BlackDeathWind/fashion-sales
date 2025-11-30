@@ -1,0 +1,33 @@
+@model IEnumerable<Category>
+@{
+    Layout = "/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Quản lý danh mục";
+}
+
+<h1 class="h4 mb-3">Quản lý danh mục</h1>
+
+<div class="table-responsive">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Slug</th>
+                <th>Hiển thị</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model)
+            {
+                <tr>
+                    <td>@c.Id</td>
+                    <td>@c.Name</td>
+                    <td>@c.Slug</td>
+                    <td>@(c.IsActive ? "Có" : "Không")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

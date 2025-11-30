@@ -1,0 +1,77 @@
+@model Order
+@{
+    Layout = "/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Chi tiết đơn hàng";
+}
+
+<h1 class="h4 mb-3">Chi tiết đơn hàng @Model.OrderCode</h1>
+
+<dl class="row">
+    <dt class="col-sm-2">Khách hàng</dt>
+    <dd class="col-sm-10">@Model.User?.Email</dd>
+
+    <dt class="col-sm-2">Ngày đặt</dt>
+    <dd class="col-sm-10">@Model.OrderDate.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</dd>
+
+    <dt class="col-sm-2">Địa chỉ giao</dt>
+    <dd class="col-sm-10">@Model.ShippingAddress</dd>
+
+    <dt class="col-sm-2">Ghi chú</dt>
+    <dd class="col-sm-10">@Model.Note</dd>
+
+    <dt class="col-sm-2">Trạng thái</dt>
+    <dd class="col-sm-10">
+        <form asp-action="UpdateStatus" method="post" class="d-flex align-items-center gap-2">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <select name="status" class="form-select" style="max-width: 220px;">
+                @foreach (OrderStatus s in Enum.GetValues(typeof(OrderStatus)))
+                {
+                    if (Model.Status == s)
+                    {
+                        <option value="@s" selected>@s</option>
+                    }
+                    else
+                    {
+                        <option value="@s">@s</option>
+                    }
+                }
+            </select>
+            <button type="submit" class="btn btn-sm btn-dark">Cập nhật</button>
+        </form>
+    </dd>
+</dl>
+
+<h2 class="h5 mt-4 mb-2">Sản phẩm trong đơn</h2>
+
+<div class="table-responsive">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Sản phẩm</th>
+                <th class="text-center">Số lượng</th>
+                <th class="text-end">Đơn giá</th>
+                <th class="text-end">Thành tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Product?.Name</td>
+                    <td class="text-center">@item.Quantity</td>
+                    <td class="text-end">@String.Format("{0:N0}₫", item.UnitPrice)</td>
+                    <td class="text-end">@String.Format("{0:N0}₫", item.TotalPrice)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex justify-content-between mt-3">
+    <div></div>
+    <div class="fw-bold">
+        Tổng cộng: @String.Format("{0:N0}₫", Model.TotalAmount)
+    </div>
+</div>
+
+

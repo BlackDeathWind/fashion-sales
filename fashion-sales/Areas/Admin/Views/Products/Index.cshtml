@@ -1,0 +1,39 @@
+@model IEnumerable<Product>
+@{
+    Layout = "/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Quản lý sản phẩm";
+}
+
+<h1 class="h4 mb-3">Quản lý sản phẩm</h1>
+<a asp-action="Create" class="btn btn-dark mb-3">Thêm sản phẩm</a>
+
+<div class="table-responsive">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Danh mục</th>
+                <th class="text-end">Giá</th>
+                <th>Trạng thái</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@p.Id</td>
+                    <td>@p.Name</td>
+                    <td>@p.Category?.Name</td>
+                    <td class="text-end">@String.Format("{0:N0}₫", p.DiscountPrice ?? p.Price)</td>
+                    <td>@(p.IsActive ? "Hiển thị" : "Ẩn")</td>
+                    <td class="text-end">
+                        <a asp-action="Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-secondary me-1">Sửa</a>
+                        <a asp-action="Delete" asp-route-id="@p.Id" class="btn btn-sm btn-outline-danger">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

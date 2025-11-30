@@ -1,0 +1,129 @@
+@model ProfileViewModel
+@{
+    ViewData["Title"] = "Thông tin tài khoản";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h2 class="card-title mb-4">Thông tin tài khoản</h2>
+                
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        @TempData["SuccessMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                }
+
+                <form asp-action="Profile" method="post" id="profileForm">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" class="form-control" type="email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                        <small class="text-muted">Email là tùy chọn</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="FullName" class="form-label"></label>
+                        <input asp-for="FullName" class="form-control" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="PhoneNumber" class="form-label"></label>
+                        <input asp-for="PhoneNumber" class="form-control" type="tel" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+
+                    <hr class="my-4" />
+                    <h5 class="mb-3">Địa chỉ</h5>
+
+                    <div class="mb-3">
+                        <label asp-for="ProvinceCode" class="form-label"></label>
+                        <input type="text"
+                               class="form-control address-combobox"
+                               id="ProfileProvinceInput"
+                               list="ProfileProvinceOptions"
+                               placeholder="Nhập để tìm Tỉnh/Thành phố"
+                               autocomplete="off" />
+                        <datalist id="ProfileProvinceOptions"></datalist>
+                        <input type="hidden" asp-for="ProvinceCode" id="ProvinceCode" />
+                        <input type="hidden" asp-for="ProvinceName" id="ProvinceName" />
+                        <span asp-validation-for="ProvinceCode" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="DistrictCode" class="form-label"></label>
+                        <input type="text"
+                               class="form-control address-combobox"
+                               id="ProfileDistrictInput"
+                               list="ProfileDistrictOptions"
+                               placeholder="Chọn Tỉnh/Thành phố trước"
+                               autocomplete="off"
+                               disabled />
+                        <datalist id="ProfileDistrictOptions"></datalist>
+                        <input type="hidden" asp-for="DistrictCode" id="DistrictCode" />
+                        <input type="hidden" asp-for="DistrictName" id="DistrictName" />
+                        <span asp-validation-for="DistrictCode" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="WardCode" class="form-label"></label>
+                        <input type="text"
+                               class="form-control address-combobox"
+                               id="ProfileWardInput"
+                               list="ProfileWardOptions"
+                               placeholder="Chọn Quận/Huyện trước"
+                               autocomplete="off"
+                               disabled />
+                        <datalist id="ProfileWardOptions"></datalist>
+                        <input type="hidden" asp-for="WardCode" id="WardCode" />
+                        <input type="hidden" asp-for="WardName" id="WardName" />
+                        <span asp-validation-for="WardCode" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="StreetAddress" class="form-label"></label>
+                        <input asp-for="StreetAddress" class="form-control" placeholder="Số nhà, tên đường" />
+                        <span asp-validation-for="StreetAddress" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-dark">Cập nhật</button>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Hủy</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/provinces-api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initAddressPicker({
+                provinceInputId: 'ProfileProvinceInput',
+                provinceListId: 'ProfileProvinceOptions',
+                provinceCodeId: 'ProvinceCode',
+                provinceNameId: 'ProvinceName',
+                districtInputId: 'ProfileDistrictInput',
+                districtListId: 'ProfileDistrictOptions',
+                districtCodeId: 'DistrictCode',
+                districtNameId: 'DistrictName',
+                wardInputId: 'ProfileWardInput',
+                wardListId: 'ProfileWardOptions',
+                wardCodeId: 'WardCode',
+                wardNameId: 'WardName',
+                initialProvinceCode: @(Model.ProvinceCode?.ToString() ?? "null"),
+                initialDistrictCode: @(Model.DistrictCode?.ToString() ?? "null"),
+                initialWardCode: @(Model.WardCode?.ToString() ?? "null")
+            });
+        });
+    </script>
+}

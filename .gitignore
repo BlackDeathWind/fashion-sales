@@ -1,0 +1,39 @@
+# Visual Studio / IDE-specific
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build output
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+# Logs, temp, artifacts
+*.log
+*.tmp
+[Ll]ogs/
+[Tt]emp/
+
+# NuGet / package artifacts
+*.nupkg
+packages/
+artifacts/
+
+# .NET / EF / scaffolding/temp files
+project.lock.json
+project.fragment.lock.json
+Generated Files/
+ScaffoldingReadMe.txt
+
+# Rider / other IDEs
+.idea/
+*.sln.iml
+
+# Node, client dependencies
+node_modules/
+wwwroot/lib/

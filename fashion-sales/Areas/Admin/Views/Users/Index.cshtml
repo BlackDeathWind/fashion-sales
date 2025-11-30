@@ -1,0 +1,33 @@
+@model IEnumerable<ApplicationUser>
+@{
+    Layout = "/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Quản lý tài khoản";
+}
+
+<h1 class="h4 mb-3">Quản lý tài khoản</h1>
+
+<div class="table-responsive">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Họ tên</th>
+                <th>SĐT</th>
+                <th>Hoạt động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var u in Model)
+            {
+                <tr>
+                    <td>@u.Email</td>
+                    <td>@u.FullName</td>
+                    <td>@u.PhoneNumber</td>
+                    <td>@(u.IsActive ? "Đang hoạt động" : "Bị khóa")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

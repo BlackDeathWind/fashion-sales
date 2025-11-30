@@ -1,0 +1,160 @@
+@model CheckoutViewModel
+@{
+    ViewData["Title"] = "Thanh toán";
+}
+
+<h1 class="h4 mb-3">Thanh toán đơn hàng</h1>
+
+<div class="row">
+    <div class="col-lg-8">
+        <form asp-action="Checkout" method="post" id="checkoutForm">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+            
+            <h5 class="mb-3">Địa chỉ giao hàng</h5>
+            
+            <div class="mb-3">
+                <label asp-for="ProvinceCode" class="form-label"></label>
+                <input type="text"
+                       class="form-control address-combobox"
+                       id="CheckoutProvinceInput"
+                       list="CheckoutProvinceOptions"
+                       placeholder="Nhập để tìm Tỉnh/Thành phố"
+                       autocomplete="off" />
+                <datalist id="CheckoutProvinceOptions"></datalist>
+                <input type="hidden" asp-for="ProvinceCode" id="ProvinceCode" />
+                <input type="hidden" asp-for="ProvinceName" id="ProvinceName" />
+                <span asp-validation-for="ProvinceCode" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="DistrictCode" class="form-label"></label>
+                <input type="text"
+                       class="form-control address-combobox"
+                       id="CheckoutDistrictInput"
+                       list="CheckoutDistrictOptions"
+                       placeholder="Chọn Tỉnh/Thành phố trước"
+                       autocomplete="off"
+                       disabled />
+                <datalist id="CheckoutDistrictOptions"></datalist>
+                <input type="hidden" asp-for="DistrictCode" id="DistrictCode" />
+                <input type="hidden" asp-for="DistrictName" id="DistrictName" />
+                <span asp-validation-for="DistrictCode" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="WardCode" class="form-label"></label>
+                <input type="text"
+                       class="form-control address-combobox"
+                       id="CheckoutWardInput"
+                       list="CheckoutWardOptions"
+                       placeholder="Chọn Quận/Huyện trước"
+                       autocomplete="off"
+                       disabled />
+                <datalist id="CheckoutWardOptions"></datalist>
+                <input type="hidden" asp-for="WardCode" id="WardCode" />
+                <input type="hidden" asp-for="WardName" id="WardName" />
+                <span asp-validation-for="WardCode" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="StreetAddress" class="form-label"></label>
+                <input asp-for="StreetAddress" class="form-control" placeholder="Số nhà, tên đường" />
+                <span asp-validation-for="StreetAddress" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Note" class="form-label"></label>
+                <textarea asp-for="Note" class="form-control" rows="3" placeholder="Ghi chú cho đơn hàng (tùy chọn)"></textarea>
+                <span asp-validation-for="Note" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Phương thức thanh toán</label>
+                <div class="alert alert-warning mb-0">
+                    Thanh toán giả lập cho đồ án tốt nghiệp.<br />
+                    Hệ thống chỉ ghi nhận đơn hàng, <strong>không kết nối cổng thanh toán thật</strong>.
+                </div>
+            </div>
+            
+            <input type="hidden" asp-for="ShippingAddress" id="ShippingAddress" />
+            
+            <button type="submit" class="btn btn-dark btn-lg mt-3">Xác nhận đặt hàng</button>
+        </form>
+    </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header fw-semibold">Tóm tắt đơn hàng</div>
+            <div class="card-body">
+                @if (!Model.Items.Any())
+                {
+                    <p>Giỏ hàng trống.</p>
+                }
+                else
+                {
+                    foreach (var item in Model.Items)
+                    {
+                        <div class="d-flex justify-content-between mb-2">
+                            <div>
+                                <div>@item.ProductName</div>
+                                <small class="text-muted">x @item.Quantity</small>
+                            </div>
+                            <div>@String.Format("{0:N0}₫", item.TotalPrice)</div>
+                        </div>
+                    }
+                    <hr />
+                    <div class="d-flex justify-content-between fw-bold">
+                        <span>Tổng cộng</span>
+                        <span>@String.Format("{0:N0}₫", Model.TotalAmount)</span>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/provinces-api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('checkoutForm');
+            const shippingAddressInput = document.getElementById('ShippingAddress');
+            
+            function updateShippingAddress() {
+                const street = document.getElementById('StreetAddress')?.value || '';
+                const ward = document.getElementById('WardName')?.value || '';
+                const district = document.getElementById('DistrictName')?.value || '';
+                const province = document.getElementById('ProvinceName')?.value || '';
+                
+                const parts = [street, ward, district, province].filter(p => p);
+                shippingAddressInput.value = parts.join(', ');
+            }
+            
+            initAddressPicker({
+                provinceInputId: 'CheckoutProvinceInput',
+                provinceListId: 'CheckoutProvinceOptions',
+                provinceCodeId: 'ProvinceCode',
+                provinceNameId: 'ProvinceName',
+                districtInputId: 'CheckoutDistrictInput',
+                districtListId: 'CheckoutDistrictOptions',
+                districtCodeId: 'DistrictCode',
+                districtNameId: 'DistrictName',
+                wardInputId: 'CheckoutWardInput',
+                wardListId: 'CheckoutWardOptions',
+                wardCodeId: 'WardCode',
+                wardNameId: 'WardName',
+                initialProvinceCode: @(Model.ProvinceCode?.ToString() ?? "null"),
+                initialDistrictCode: @(Model.DistrictCode?.ToString() ?? "null"),
+                initialWardCode: @(Model.WardCode?.ToString() ?? "null"),
+                onChange: updateShippingAddress
+            });
+            
+            if (form) {
+                form.addEventListener('change', updateShippingAddress);
+                form.addEventListener('input', updateShippingAddress);
+            }
+            
+            updateShippingAddress();
+        });
+    </script>
+}

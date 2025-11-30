@@ -1,0 +1,31 @@
+@using Microsoft.AspNetCore.Identity
+@using fashion_sales.Models.Entities
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            @User.Identity?.Name
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" asp-controller="Account" asp-action="Profile">Tài khoản của tôi</a></li>
+            <li><a class="dropdown-item" asp-controller="Order" asp-action="MyOrders">Đơn hàng của tôi</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                    <button type="submit" class="dropdown-item">Đăng xuất</button>
+                </form>
+            </li>
+        </ul>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="btn btn-dark" asp-controller="Account" asp-action="Register">Đăng ký</a>
+    </li>
+}
+
+

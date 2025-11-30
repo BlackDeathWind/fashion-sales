@@ -1,0 +1,41 @@
+@model IEnumerable<Order>
+@{
+    ViewData["Title"] = "Đơn hàng của tôi";
+}
+
+<h1 class="h4 mb-3">Đơn hàng của tôi</h1>
+
+@if (!Model.Any())
+{
+    <p>Bạn chưa có đơn hàng nào.</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Mã đơn</th>
+                    <th>Ngày đặt</th>
+                    <th class="text-end">Tổng tiền</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var o in Model)
+                {
+                    <tr>
+                        <td>@o.OrderCode</td>
+                        <td>@o.OrderDate.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                        <td class="text-end">@String.Format("{0:N0}₫", o.TotalAmount)</td>
+                        <td>
+                            @o.Status.ToString()
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+

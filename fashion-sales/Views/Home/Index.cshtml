@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+<section class="hero-banner mb-5">
+    <div class="row align-items-center">
+        <div class="col-md-6 mb-4 mb-md-0">
+            <h1 class="display-4 fw-bold">Thời trang hiện đại<br />Phong cách riêng bạn</h1>
+            <p class="lead text-muted mt-3">
+                Khám phá bộ sưu tập mới nhất cho Nam, Nữ và Trẻ em với mức giá hấp dẫn.
+            </p>
+            <a class="btn btn-dark btn-lg mt-3" asp-controller="Category" asp-action="Index">Mua ngay</a>
+        </div>
+        <div class="col-md-6 text-center">
+            <div class="hero-image bg-light rounded-4 p-4">
+                <span class="text-muted">Khu vực banner / slider hình ảnh bộ sưu tập</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mb-5">
+    <h2 class="h4 mb-3">Danh mục nổi bật</h2>
+    <div class="row g-3">
+        <div class="col-6 col-md-3">
+            <a class="card text-center text-decoration-none text-dark" asp-controller="Category" asp-action="Index" asp-route-slug="nam">
+                <div class="card-body">
+                    <div class="category-thumb mb-2 bg-light rounded-3 p-4">Nam</div>
+                    <div class="fw-semibold">Thời trang Nam</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-3">
+            <a class="card text-center text-decoration-none text-dark" asp-controller="Category" asp-action="Index" asp-route-slug="nu">
+                <div class="card-body">
+                    <div class="category-thumb mb-2 bg-light rounded-3 p-4">Nữ</div>
+                    <div class="fw-semibold">Thời trang Nữ</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-3">
+            <a class="card text-center text-decoration-none text-dark" asp-controller="Category" asp-action="Index" asp-route-slug="tre-em">
+                <div class="card-body">
+                    <div class="category-thumb mb-2 bg-light rounded-3 p-4">Trẻ em</div>
+                    <div class="fw-semibold">Cho bé</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-3">
+            <a class="card text-center text-decoration-none text-dark" asp-controller="Category" asp-action="Index" asp-route-slug="phu-kien">
+                <div class="card-body">
+                    <div class="category-thumb mb-2 bg-light rounded-3 p-4">Phụ kiện</div>
+                    <div class="fw-semibold">Phụ kiện</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2 class="h4 mb-3">Sản phẩm nổi bật</h2>
+    <div class="row g-4">
+        <!-- Sau này sẽ bind danh sách sản phẩm từ model -->
+        <div class="col-6 col-md-3">
+            <div class="card product-card">
+                <div class="ratio ratio-4x3 bg-light rounded-top">
+                    <span class="text-muted d-flex align-items-center justify-content-center">Ảnh sản phẩm</span>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title small mb-1">Tên sản phẩm demo</h5>
+                    <p class="card-text fw-bold mb-2 text-danger">199.000₫</p>
+                    <a href="#" class="btn btn-sm btn-outline-dark w-100">Thêm vào giỏ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

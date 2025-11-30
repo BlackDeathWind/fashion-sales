@@ -1,0 +1,59 @@
+@model IEnumerable<Order>
+@{
+    Layout = "/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Quản lý đơn hàng";
+    var selectedStatus = ViewBag.SelectedStatus as OrderStatus?;
+}
+
+<h1 class="h4 mb-3">Quản lý đơn hàng</h1>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <select name="status" class="form-select" onchange="this.form.submit()">
+            <option value="">Tất cả trạng thái</option>
+            @foreach (OrderStatus s in Enum.GetValues(typeof(OrderStatus)))
+            {
+                if (selectedStatus == s)
+                {
+                    <option value="@s" selected>@s</option>
+                }
+                else
+                {
+                    <option value="@s">@s</option>
+                }
+            }
+        </select>
+    </div>
+</form>
+
+<div class="table-responsive">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Mã đơn</th>
+                <th>Khách hàng</th>
+                <th>Ngày đặt</th>
+                <th class="text-end">Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var o in Model)
+            {
+                <tr>
+                    <td>@o.OrderCode</td>
+                    <td>@o.User?.Email</td>
+                    <td>@o.OrderDate.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                    <td class="text-end">@String.Format("{0:N0}₫", o.TotalAmount)</td>
+                    <td>@o.Status</td>
+                    <td class="text-end">
+                        <a asp-action="Details" asp-route-id="@o.Id" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

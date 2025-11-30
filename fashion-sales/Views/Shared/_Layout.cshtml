@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Fashion Sales</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/fashion_sales.styles.css" asp-append-version="true" />
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom box-shadow">
+            <div class="container">
+                <a class="navbar-brand fw-bold text-uppercase" asp-area="" asp-controller="Home" asp-action="Index">
+                    Fashion Sales
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                        aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Category" asp-action="Index">Sản phẩm</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex me-3" asp-controller="Product" asp-action="Search" method="get">
+                        <input class="form-control me-2" type="search" name="q" placeholder="Tìm sản phẩm..." aria-label="Search" />
+                        <button class="btn btn-outline-dark" type="submit">Tìm</button>
+                    </form>
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        <li class="nav-item me-2">
+                            <a class="btn btn-outline-dark position-relative" asp-controller="Cart" asp-action="Index">
+                                Giỏ hàng
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
+                                    @ViewBag.CartCount
+                                </span>
+                            </a>
+                        </li>
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="flex-fill">
+        <main role="main" class="py-4">
+            <div class="container">
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+
+    <footer class="border-top mt-auto py-4 bg-light">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <div>
+                <strong>Fashion Sales</strong> &copy; 2025 - Website bán hàng thời trang.
+            </div>
+            <div class="mt-2 mt-md-0">
+                <a href="#" class="text-muted me-3">Về chúng tôi</a>
+                <a href="#" class="text-muted me-3">Liên hệ</a>
+                <a href="#" class="text-muted">Chính sách bảo mật</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
