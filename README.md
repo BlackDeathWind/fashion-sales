@@ -3,7 +3,7 @@
 ### 1. Yêu cầu môi trường
 
 - .NET SDK 8.0 trở lên.
-- MySQL Server 8.x, tài khoản `root` mật khẩu `xxx` (hoặc chỉnh lại trong `appsettings.json`).
+- MySQL Server 8.x, tài khoản `root` mật khẩu `xxx` (chỉnh lại trong `appsettings.json`).
 
 ### 2. Chuẩn bị cơ sở dữ liệu
 

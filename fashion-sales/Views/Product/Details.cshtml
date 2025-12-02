@@ -28,7 +28,6 @@
     </div>
     <div class="col-md-6">
         <h1 class="h3 fw-bold mb-2">@Model.Name</h1>
-        <p class="text-muted mb-1">Mã sản phẩm: @Model.Id</p>
         <div class="mb-3">
             <span class="h4 text-danger fw-bold">@String.Format("{0:N0}₫", Model.DiscountPrice ?? Model.Price)</span>
             @if (Model.DiscountPrice.HasValue)

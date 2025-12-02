@@ -24,23 +24,23 @@
 
                     <p class="text-muted small mb-2">Lọc theo giá và sắp xếp. Thay đổi lựa chọn sẽ tự động áp dụng.</p>
 
-                    <div class="mb-3">
-                        <label class="form-label">Khoảng giá</label>
+                <div class="mb-3">
+                    <label class="form-label">Khoảng giá</label>
                         <select class="form-select" name="price" onchange="this.form.submit()">
                             <option value="" selected="@(string.IsNullOrEmpty(Model.PriceFilter) ? "selected" : null)">Tất cả</option>
                             <option value="lt200" selected="@(Model.PriceFilter == "lt200" ? "selected" : null)">Dưới 200.000₫</option>
                             <option value="200-500" selected="@(Model.PriceFilter == "200-500" ? "selected" : null)">200.000₫ - 500.000₫</option>
                             <option value="gt500" selected="@(Model.PriceFilter == "gt500" ? "selected" : null)">Trên 500.000₫</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Sắp xếp</label>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Sắp xếp</label>
                         <select class="form-select" name="sort" onchange="this.form.submit()">
                             <option value="newest" selected="@(string.IsNullOrEmpty(Model.SortOption) || Model.SortOption == "newest" ? "selected" : null)">Mới nhất</option>
                             <option value="price-asc" selected="@(Model.SortOption == "price-asc" ? "selected" : null)">Giá tăng dần</option>
                             <option value="price-desc" selected="@(Model.SortOption == "price-desc" ? "selected" : null)">Giá giảm dần</option>
-                        </select>
-                    </div>
+                    </select>
+                </div>
                 </form>
             </div>
         </div>
@@ -54,11 +54,11 @@
             }
             else
             {
-                foreach (var p in Model.Products)
-                {
-                    <div class="col-6 col-md-4">
-                        <div class="card product-card h-100">
-                            <a asp-controller="Product" asp-action="Details" asp-route-id="@p.Id" class="text-decoration-none text-dark">
+                        foreach (var p in Model.Products)
+                        {
+                            <div class="col-6 col-md-4">
+                                <div class="card product-card h-100">
+                                    <a asp-controller="Product" asp-action="Details" asp-route-id="@p.Id" class="text-decoration-none">
                                 <div class="ratio ratio-4x3 bg-light rounded-top">
                                     @if (!string.IsNullOrEmpty(p.MainImageUrl))
                                     {
