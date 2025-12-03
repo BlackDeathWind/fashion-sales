@@ -3,17 +3,18 @@
     ViewData["Title"] = Model.Name;
 }
 
-<nav aria-label="breadcrumb" class="mb-4">
-    <ol class="breadcrumb small">
-        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
-        <li class="breadcrumb-item">
-            <a asp-controller="Category" asp-action="Index" asp-route-id="@Model.CategoryId">@Model.Category.Name</a>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
-    </ol>
-</nav>
+<div class="container">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb small">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+            <li class="breadcrumb-item">
+                <a asp-controller="Category" asp-action="Index" asp-route-id="@Model.CategoryId">@Model.Category.Name</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+        </ol>
+    </nav>
 
-<div class="row g-5">
+    <div class="row g-5">
     <!-- Left: Images -->
     <div class="col-lg-7">
         <div class="d-flex gap-3">
@@ -106,6 +107,7 @@
         <h2 class="h6 fw-bold mb-2">Mô tả sản phẩm</h2>
         <p class="text-muted">@(string.IsNullOrWhiteSpace(Model.Description) ? "Đang cập nhật..." : Model.Description)</p>
     </div>
+</div>
 </div>
 
 @section Scripts {

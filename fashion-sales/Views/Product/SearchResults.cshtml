@@ -3,7 +3,8 @@
     ViewData["Title"] = "Tìm kiếm";
 }
 
-<div class="d-flex justify-content-between align-items-end mb-4">
+<div class="container">
+    <div class="d-flex justify-content-between align-items-end mb-4">
     <div>
         <h2 class="fw-bold mb-1">Kết quả tìm kiếm</h2>
         <p class="text-muted mb-0">Tìm thấy @Model.Products.Count() sản phẩm cho: "<strong>@Model.SearchTerm</strong>"</p>
@@ -68,6 +69,7 @@
             </div>
         }
     }
+    </div>
 </div>
 
 

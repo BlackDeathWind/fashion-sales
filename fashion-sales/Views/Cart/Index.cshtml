@@ -4,9 +4,10 @@
     var total = Model.Sum(i => i.TotalPrice);
 }
 
-<h1 class="h4 mb-4 fw-bold">Giỏ hàng của bạn</h1>
+<div class="container">
+    <h1 class="h4 mb-4 fw-bold">Giỏ hàng của bạn</h1>
 
-<div class="row">
+    <div class="row">
     <div class="col-lg-8 mb-4">
         @if (!Model.Any())
         {
@@ -112,6 +113,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 
 @section Scripts {

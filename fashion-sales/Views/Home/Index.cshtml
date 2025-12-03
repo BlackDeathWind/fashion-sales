@@ -5,7 +5,7 @@
 <!-- Hero Section -->
 <section class="hero-section d-flex align-items-center">
     <div class="container">
-        <div class="row align-items-center">
+    <div class="row align-items-center">
             <div class="col-lg-6 mb-5 mb-lg-0 reveal">
                 <div class="d-inline-flex align-items-center gap-2 border border-secondary rounded-pill px-3 py-1 mb-4">
                     <span class="badge bg-white text-dark rounded-pill">MỚI</span>
@@ -18,18 +18,18 @@
                     <a asp-controller="Category" asp-action="Index" class="btn btn-modern btn-primary-glow">
                         Mua ngay <i class="ph-bold ph-arrow-right"></i>
                     </a>
-                    <a href="#" class="btn btn-modern btn-outline-light border-0">
-                        Xem Lookbook
+                    <a href="#trending-products" class="btn btn-modern btn-outline-light border-0 smooth-scroll">
+                        Xem xu hướng
                     </a>
                 </div>
                 
                 <div class="mt-5 d-flex gap-5 text-muted small">
                     <div>
-                        <strong class="d-block text-white fs-4">2k+</strong>
+                        <strong class="d-block text-white fs-4">@ViewBag.TotalProducts</strong>
                         Sản phẩm cao cấp
                     </div>
                     <div>
-                        <strong class="d-block text-white fs-4">500+</strong>
+                        <strong class="d-block text-white fs-4">@ViewBag.TotalOrders</strong>
                         Khách hàng hài lòng
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                             <span class="fw-bold text-white small">Đơn hàng đã giao</span>
                         </div>
                     </div>
-                </div>
+        </div>
             </div>
         </div>
     </div>
@@ -64,7 +64,7 @@
             <div>
                 <h2 class="fw-bold mb-1">Mua sắm theo danh mục</h2>
                 <p class="text-muted">Khám phá các bộ sưu tập được tuyển chọn</p>
-            </div>
+                </div>
             <a asp-controller="Category" asp-action="Index" class="text-white text-decoration-none d-flex align-items-center gap-2 small hover-underline">
                 Xem tất cả <i class="ph ph-arrow-right"></i>
             </a>
@@ -81,9 +81,9 @@
                             <span class="text-white-50 small">120+ Sản phẩm</span>
                         </div>
                         <div class="category-arrow"><i class="ph-bold ph-arrow-up-right"></i></div>
-                    </div>
-                </a>
-            </div>
+                </div>
+            </a>
+        </div>
             
             <!-- Women -->
             <div class="col-md-4 reveal">
@@ -95,9 +95,9 @@
                             <span class="text-white-50 small">240+ Sản phẩm</span>
                         </div>
                         <div class="category-arrow"><i class="ph-bold ph-arrow-up-right"></i></div>
-                    </div>
-                </a>
-            </div>
+                </div>
+            </a>
+        </div>
 
             <!-- Accessories -->
             <div class="col-md-4 reveal">
@@ -109,19 +109,19 @@
                             <span class="text-white-50 small">85+ Sản phẩm</span>
                         </div>
                         <div class="category-arrow"><i class="ph-bold ph-arrow-up-right"></i></div>
-                    </div>
-                </a>
+                </div>
+            </a>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Featured Products -->
-<section class="py-5">
+<section id="trending-products" class="py-5">
     <div class="container">
         <h2 class="fw-bold mb-4 text-center reveal">Đang thịnh hành</h2>
         
-        <div class="row g-4">
+    <div class="row g-4">
             <!-- Product 1 -->
             <div class="col-6 col-md-3 reveal">
                 <div class="product-card-modern">
@@ -211,7 +211,7 @@
                                 <i class="ph-fill ph-star"></i> 4.2
                             </div>
                         </div>
-                    </div>
+                </div>
                 </div>
             </div>
         </div>

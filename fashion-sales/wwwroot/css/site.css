@@ -91,7 +91,7 @@ body {
     display: grid;
     place-items: center;
     font-weight: 900;
-    font-size: 14px;
+  font-size: 14px;
     box-shadow: 0 4px 12px var(--fs-primary-glow);
 }
 
@@ -262,7 +262,7 @@ body {
     width: 40px; height: 40px;
     background: white;
     color: black;
-    border-radius: 50%;
+  border-radius: 50%;
     display: grid;
     place-items: center;
     opacity: 0;
@@ -331,7 +331,7 @@ body {
     border-radius: 50%;
     background: white;
     color: black;
-    border: none;
+  border: none;
     display: grid;
     place-items: center;
     font-size: 1.1rem;
@@ -400,7 +400,7 @@ body {
 }
 
 .dropdown-item {
-    color: var(--fs-text-main);
+  color: var(--fs-text-main);
 }
 
 .dropdown-item:hover {
@@ -418,7 +418,7 @@ body {
 .form-control:focus {
     background-color: rgba(255, 255, 255, 0.1);
     border-color: var(--fs-primary);
-    color: var(--fs-text-main);
+  color: var(--fs-text-main);
     box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
 }
 
@@ -521,7 +521,7 @@ body {
 .badge-modern {
     padding: 0.5em 1em;
     border-radius: 50px;
-    font-weight: 600;
+  font-weight: 600;
     font-size: 0.75rem;
     letter-spacing: 0.02em;
 }
@@ -584,7 +584,7 @@ body {
 }
 
 .breadcrumb-item a {
-    color: var(--fs-text-muted);
+  color: var(--fs-text-muted);
     text-decoration: none;
 }
 
@@ -611,6 +611,110 @@ body {
 /* Object fit utility */
 .object-fit-cover {
     object-fit: cover;
+}
+
+/* =========================================
+   10. FILTER PANEL
+   ========================================= */
+.filter-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--fs-surface-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    position: sticky;
+    top: 120px;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.filter-panel .form-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  color: var(--fs-text-muted);
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter-panel .form-check {
+    padding: 0.5rem 0;
+    margin: 0;
+}
+
+.filter-panel .form-check-input {
+    width: 1.1em;
+    height: 1.1em;
+    margin-top: 0.25em;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--fs-surface-border);
+    cursor: pointer;
+}
+
+.filter-panel .form-check-input:checked {
+    background-color: var(--fs-primary);
+    border-color: var(--fs-primary);
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+}
+
+.filter-panel .form-check-input:focus {
+    border-color: var(--fs-primary);
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+}
+
+.filter-panel .form-check-label {
+  color: var(--fs-text-main);
+    font-size: 0.9rem;
+    font-weight: 400;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    transition: color 0.2s;
+}
+
+.filter-panel .form-check:hover .form-check-label {
+    color: var(--fs-primary);
+}
+
+.filter-panel .form-select {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--fs-surface-border);
+    color: white;
+    padding: 0.6rem 1rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+}
+
+.filter-panel .form-select:focus {
+    background: rgba(0, 0, 0, 0.5);
+    border-color: var(--fs-primary);
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+    color: white;
+    outline: none;
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+.smooth-scroll {
+    scroll-behavior: smooth;
+}
+
+/* Responsive filter panel */
+@media (max-width: 768px) {
+    .filter-panel {
+        position: relative;
+        top: 0;
+        margin-bottom: 2rem;
+    }
 }
 
 /* Background mesh update */

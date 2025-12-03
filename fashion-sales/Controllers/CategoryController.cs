@@ -50,14 +50,17 @@ public class CategoryController : Controller
 
             switch (price)
             {
-                case "lt200":
-                    effectivePrice = effectivePrice.Where(x => x.EffectivePrice < 200_000m);
+                case "0-49":
+                    effectivePrice = effectivePrice.Where(x => x.EffectivePrice >= 0m && x.EffectivePrice <= 49_000m);
                     break;
-                case "200-500":
-                    effectivePrice = effectivePrice.Where(x => x.EffectivePrice >= 200_000m && x.EffectivePrice <= 500_000m);
+                case "50-199":
+                    effectivePrice = effectivePrice.Where(x => x.EffectivePrice >= 50_000m && x.EffectivePrice <= 199_000m);
                     break;
-                case "gt500":
-                    effectivePrice = effectivePrice.Where(x => x.EffectivePrice > 500_000m);
+                case "200-499":
+                    effectivePrice = effectivePrice.Where(x => x.EffectivePrice >= 200_000m && x.EffectivePrice <= 499_000m);
+                    break;
+                case "500+":
+                    effectivePrice = effectivePrice.Where(x => x.EffectivePrice >= 500_000m);
                     break;
             }
 
