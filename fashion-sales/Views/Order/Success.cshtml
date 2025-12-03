@@ -3,18 +3,20 @@
     ViewData["Title"] = "Đặt hàng thành công";
 }
 
-<div class="text-center my-5">
-    <h1 class="h3 mb-3">Đặt hàng thành công</h1>
-    <p class="mb-4">
-        Cảm ơn bạn đã mua sắm tại <strong>Fashion Sales</strong>!<br />
-        Mã đơn hàng của bạn là: <strong>@Model.OrderCode</strong>.
-    </p>
+<div class="text-center py-5">
+    <div class="mb-4 d-inline-flex align-items-center justify-content-center rounded-circle bg-success bg-opacity-10 text-success" style="width: 80px; height: 80px;">
+        <i class="ph-fill ph-check fs-1"></i>
+    </div>
+    <h2 class="fw-bold mb-3">Đặt hàng thành công!</h2>
     <p class="text-muted mb-4">
-        Nhân viên sẽ liên hệ và xử lý đơn hàng trong thời gian sớm nhất.<br />
-        Bạn có thể theo dõi trạng thái đơn hàng trong mục <a asp-action="MyOrders">Đơn hàng của tôi</a>.
+        Cảm ơn bạn đã mua sắm tại <strong class="text-white">Fashion Sales</strong>!<br />
+        Mã đơn hàng của bạn là: <strong class="text-white">@Model.OrderCode</strong>.<br />
+        Chúng tôi sẽ liên hệ với bạn sớm nhất để xác nhận.
     </p>
-    <a asp-controller="Home" asp-action="Index" class="btn btn-dark me-2">Tiếp tục mua sắm</a>
-    <a asp-action="MyOrders" class="btn btn-outline-dark">Đơn hàng của tôi</a>
+    <div class="d-flex justify-content-center gap-3">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary-modern">Tiếp tục mua sắm</a>
+        <a asp-action="MyOrders" class="btn btn-outline-light rounded-pill px-4 py-2 fw-bold" style="border-width: 2px;">Đơn hàng của tôi</a>
+    </div>
 </div>
 
 

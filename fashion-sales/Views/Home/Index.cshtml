@@ -2,74 +2,216 @@
     ViewData["Title"] = "Trang chủ";
 }
 
-<section class="hero-banner mb-5">
-    <div class="row align-items-center">
-        <div class="col-md-6 mb-4 mb-md-0">
-            <h1 class="display-4 fw-bold">Thời trang hiện đại<br />Phong cách riêng bạn</h1>
-            <p class="lead text-muted mt-3">
-                Khám phá bộ sưu tập mới nhất cho Nam, Nữ và Trẻ em với mức giá hấp dẫn.
-            </p>
-            <a class="btn btn-dark btn-lg mt-3" asp-controller="Category" asp-action="Index">Mua ngay</a>
-        </div>
-        <div class="col-md-6 text-center">
-            <div class="hero-image rounded-4 p-4 d-flex align-items-center justify-content-center">
-                <span class="text-muted">Khu vực banner / slider hình ảnh bộ sưu tập</span>
+<!-- Hero Section -->
+<section class="hero-section d-flex align-items-center">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0 reveal">
+                <div class="d-inline-flex align-items-center gap-2 border border-secondary rounded-pill px-3 py-1 mb-4">
+                    <span class="badge bg-white text-dark rounded-pill">MỚI</span>
+                    <span class="small text-muted">Bộ sưu tập Mùa hè 2025</span>
+                </div>
+                <h1 class="hero-title">Nâng tầm phong cách<br>Hàng ngày của bạn.</h1>
+                <p class="hero-desc">Khám phá những xu hướng thời trang mới nhất. Chất lượng cao cấp, vật liệu bền vững và thiết kế thể hiện cá tính riêng của bạn.</p>
+                
+                <div class="d-flex gap-3">
+                    <a asp-controller="Category" asp-action="Index" class="btn btn-modern btn-primary-glow">
+                        Mua ngay <i class="ph-bold ph-arrow-right"></i>
+                    </a>
+                    <a href="#" class="btn btn-modern btn-outline-light border-0">
+                        Xem Lookbook
+                    </a>
+                </div>
+                
+                <div class="mt-5 d-flex gap-5 text-muted small">
+                    <div>
+                        <strong class="d-block text-white fs-4">2k+</strong>
+                        Sản phẩm cao cấp
+                    </div>
+                    <div>
+                        <strong class="d-block text-white fs-4">500+</strong>
+                        Khách hàng hài lòng
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6 text-center position-relative reveal">
+                <div class="hero-blob"></div>
+                <div class="hero-image-container animate-float">
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1000&auto=format&fit=crop" 
+                         alt="Fashion Model" 
+                         class="img-fluid rounded-4 shadow-lg"
+                         style="max-height: 550px; object-fit: cover; border: 1px solid rgba(255,255,255,0.1);">
+                    
+                    <!-- Floating Card Element -->
+                    <div class="position-absolute bottom-0 start-0 bg-dark p-3 rounded-3 shadow-lg border border-secondary m-4 d-flex align-items-center gap-3" style="max-width: 200px;">
+                        <div class="bg-success rounded-circle p-2 d-flex"><i class="ph ph-check text-white"></i></div>
+                        <div class="text-start">
+                            <small class="d-block text-muted" style="font-size: 0.7rem;">Trạng thái</small>
+                            <span class="fw-bold text-white small">Đơn hàng đã giao</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="mb-5">
-    <h2 class="h4 mb-3">Danh mục nổi bật</h2>
-    <div class="row g-3">
-        <div class="col-6 col-md-3">
-            <a class="card text-center text-decoration-none" asp-controller="Category" asp-action="Index" asp-route-slug="nam">
-                <div class="card-body">
-                    <div class="category-thumb mb-2 bg-light rounded-3 p-4">Nam</div>
-                    <div class="fw-semibold">Thời trang Nam</div>
-                </div>
+<!-- Categories Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-end mb-4 reveal">
+            <div>
+                <h2 class="fw-bold mb-1">Mua sắm theo danh mục</h2>
+                <p class="text-muted">Khám phá các bộ sưu tập được tuyển chọn</p>
+            </div>
+            <a asp-controller="Category" asp-action="Index" class="text-white text-decoration-none d-flex align-items-center gap-2 small hover-underline">
+                Xem tất cả <i class="ph ph-arrow-right"></i>
             </a>
         </div>
-        <div class="col-6 col-md-3">
-            <a class="card text-center text-decoration-none" asp-controller="Category" asp-action="Index" asp-route-slug="nu">
-                <div class="card-body">
-                    <div class="category-thumb mb-2 bg-light rounded-3 p-4">Nữ</div>
-                    <div class="fw-semibold">Thời trang Nữ</div>
-                </div>
-            </a>
-        </div>
-        <div class="col-6 col-md-3">
-            <a class="card text-center text-decoration-none" asp-controller="Category" asp-action="Index" asp-route-slug="tre-em">
-                <div class="card-body">
-                    <div class="category-thumb mb-2 bg-light rounded-3 p-4">Trẻ em</div>
-                    <div class="fw-semibold">Cho bé</div>
-                </div>
-            </a>
-        </div>
-        <div class="col-6 col-md-3">
-            <a class="card text-center text-decoration-none" asp-controller="Category" asp-action="Index" asp-route-slug="phu-kien">
-                <div class="card-body">
-                    <div class="category-thumb mb-2 bg-light rounded-3 p-4">Phụ kiện</div>
-                    <div class="fw-semibold">Phụ kiện</div>
-                </div>
-            </a>
+
+        <div class="row g-4">
+            <!-- Men -->
+            <div class="col-md-4 reveal">
+                <a asp-controller="Category" asp-action="Index" asp-route-slug="nam" class="text-decoration-none">
+                    <div class="category-card">
+                        <img src="https://images.unsplash.com/photo-1488161628813-99c974c79123?auto=format&fit=crop&q=80&w=600" class="category-bg" alt="Nam">
+                        <div class="category-overlay">
+                            <h3 class="category-title">Nam</h3>
+                            <span class="text-white-50 small">120+ Sản phẩm</span>
+                        </div>
+                        <div class="category-arrow"><i class="ph-bold ph-arrow-up-right"></i></div>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Women -->
+            <div class="col-md-4 reveal">
+                <a asp-controller="Category" asp-action="Index" asp-route-slug="nu" class="text-decoration-none">
+                    <div class="category-card">
+                        <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=600" class="category-bg" alt="Nữ">
+                        <div class="category-overlay">
+                            <h3 class="category-title">Nữ</h3>
+                            <span class="text-white-50 small">240+ Sản phẩm</span>
+                        </div>
+                        <div class="category-arrow"><i class="ph-bold ph-arrow-up-right"></i></div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Accessories -->
+            <div class="col-md-4 reveal">
+                <a asp-controller="Category" asp-action="Index" asp-route-slug="phu-kien" class="text-decoration-none">
+                    <div class="category-card">
+                        <img src="https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?auto=format&fit=crop&q=80&w=600" class="category-bg" alt="Phụ kiện">
+                        <div class="category-overlay">
+                            <h3 class="category-title">Phụ kiện</h3>
+                            <span class="text-white-50 small">85+ Sản phẩm</span>
+                        </div>
+                        <div class="category-arrow"><i class="ph-bold ph-arrow-up-right"></i></div>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 </section>
 
-<section>
-    <h2 class="h4 mb-3">Sản phẩm nổi bật</h2>
-    <div class="row g-4">
-        <!-- Sau này sẽ bind danh sách sản phẩm từ model -->
-        <div class="col-6 col-md-3">
-            <div class="card product-card">
-                <div class="ratio ratio-4x3 bg-light rounded-top">
-                    <span class="text-muted d-flex align-items-center justify-content-center">Ảnh sản phẩm</span>
+<!-- Featured Products -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="fw-bold mb-4 text-center reveal">Đang thịnh hành</h2>
+        
+        <div class="row g-4">
+            <!-- Product 1 -->
+            <div class="col-6 col-md-3 reveal">
+                <div class="product-card-modern">
+                    <div class="product-img-box">
+                        <span class="position-absolute top-0 start-0 m-2 badge bg-danger rounded-1">GIẢM GIÁ</span>
+                        <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&q=80&w=400" alt="Product">
+                        <div class="product-actions">
+                            <button class="action-btn" title="Thêm vào giỏ"><i class="ph ph-shopping-bag"></i></button>
+                            <button class="action-btn" title="Xem nhanh"><i class="ph ph-eye"></i></button>
+                        </div>
+                    </div>
+                    <div>
+                        <small class="text-muted text-uppercase" style="font-size: 0.7rem;">Cotton</small>
+                        <h5 class="fw-bold text-white mb-1 fs-6">Áo dài tay cơ bản</h5>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <span class="price-tag">1.050.000₫</span>
+                            <div class="text-warning small">
+                                <i class="ph-fill ph-star"></i> 4.8
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title small mb-1">Tên sản phẩm demo</h5>
-                    <p class="card-text fw-bold mb-2 text-danger">199.000₫</p>
-                    <a href="#" class="btn btn-sm btn-outline-dark w-100">Thêm vào giỏ</a>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="col-6 col-md-3 reveal">
+                <div class="product-card-modern">
+                    <div class="product-img-box">
+                        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=400" alt="Product">
+                        <div class="product-actions">
+                            <button class="action-btn"><i class="ph ph-shopping-bag"></i></button>
+                            <button class="action-btn"><i class="ph ph-eye"></i></button>
+                        </div>
+                    </div>
+                    <div>
+                        <small class="text-muted text-uppercase" style="font-size: 0.7rem;">Giày dép</small>
+                        <h5 class="fw-bold text-white mb-1 fs-6">Giày thể thao Urban</h5>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <span class="price-tag">2.800.000₫</span>
+                            <div class="text-warning small">
+                                <i class="ph-fill ph-star"></i> 4.9
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="col-6 col-md-3 reveal">
+                <div class="product-card-modern">
+                    <div class="product-img-box">
+                        <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=400" alt="Product">
+                        <div class="product-actions">
+                            <button class="action-btn"><i class="ph ph-shopping-bag"></i></button>
+                            <button class="action-btn"><i class="ph ph-eye"></i></button>
+                        </div>
+                    </div>
+                    <div>
+                        <small class="text-muted text-uppercase" style="font-size: 0.7rem;">Áo khoác</small>
+                        <h5 class="fw-bold text-white mb-1 fs-6">Áo khoác Denim</h5>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <span class="price-tag">1.980.000₫</span>
+                            <div class="text-warning small">
+                                <i class="ph-fill ph-star"></i> 4.5
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="col-6 col-md-3 reveal">
+                <div class="product-card-modern">
+                    <div class="product-img-box">
+                        <img src="https://images.unsplash.com/photo-1589363359656-347432770289?auto=format&fit=crop&q=80&w=400" alt="Product">
+                        <div class="product-actions">
+                            <button class="action-btn"><i class="ph ph-shopping-bag"></i></button>
+                            <button class="action-btn"><i class="ph ph-eye"></i></button>
+                        </div>
+                    </div>
+                    <div>
+                        <small class="text-muted text-uppercase" style="font-size: 0.7rem;">Phụ kiện</small>
+                        <h5 class="fw-bold text-white mb-1 fs-6">Kính mát Vintage</h5>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <span class="price-tag">580.000₫</span>
+                            <div class="text-warning small">
+                                <i class="ph-fill ph-star"></i> 4.2
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

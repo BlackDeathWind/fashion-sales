@@ -3,91 +3,89 @@
     ViewData["Title"] = Model.CategoryName;
 }
 
-<nav aria-label="breadcrumb" class="mb-3">
-    <ol class="breadcrumb">
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb small">
         <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
         <li class="breadcrumb-item active" aria-current="page">@Model.CategoryName</li>
     </ol>
 </nav>
 
-<div class="row">
-    <div class="col-md-3 mb-4">
-        <div class="card">
-            <div class="card-header">Bộ lọc</div>
-            <div class="card-body">
-                <form method="get" asp-action="Index" asp-controller="Category" id="filterForm">
-                    @* Giữ lại slug danh mục nếu có *@
-                    @if (!string.IsNullOrEmpty(Model.CategorySlug))
-                    {
-                        <input type="hidden" name="slug" value="@Model.CategorySlug" />
-                    }
+<div class="d-flex justify-content-between align-items-end mb-4">
+    <div>
+        <h2 class="fw-bold mb-1">@Model.CategoryName</h2>
+        <p class="text-muted mb-0">Hiển thị @Model.Products.Count() sản phẩm</p>
+    </div>
+    
+    <!-- Filters -->
+    <form method="get" asp-action="Index" asp-controller="Category" id="filterForm" class="d-flex gap-2">
+        @if (!string.IsNullOrEmpty(Model.CategorySlug))
+        {
+            <input type="hidden" name="slug" value="@Model.CategorySlug" />
+        }
+        <select class="form-select form-select-sm bg-dark text-white border-secondary" name="sort" onchange="this.form.submit()">
+            <option value="newest" selected="@(string.IsNullOrEmpty(Model.SortOption) || Model.SortOption == "newest" ? "selected" : null)">Mới nhất</option>
+            <option value="price-asc" selected="@(Model.SortOption == "price-asc" ? "selected" : null)">Giá: Thấp đến Cao</option>
+            <option value="price-desc" selected="@(Model.SortOption == "price-desc" ? "selected" : null)">Giá: Cao đến Thấp</option>
+        </select>
+    </form>
+</div>
 
-                    <p class="text-muted small mb-2">Lọc theo giá và sắp xếp. Thay đổi lựa chọn sẽ tự động áp dụng.</p>
-
-                <div class="mb-3">
-                    <label class="form-label">Khoảng giá</label>
-                        <select class="form-select" name="price" onchange="this.form.submit()">
-                            <option value="" selected="@(string.IsNullOrEmpty(Model.PriceFilter) ? "selected" : null)">Tất cả</option>
-                            <option value="lt200" selected="@(Model.PriceFilter == "lt200" ? "selected" : null)">Dưới 200.000₫</option>
-                            <option value="200-500" selected="@(Model.PriceFilter == "200-500" ? "selected" : null)">200.000₫ - 500.000₫</option>
-                            <option value="gt500" selected="@(Model.PriceFilter == "gt500" ? "selected" : null)">Trên 500.000₫</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Sắp xếp</label>
-                        <select class="form-select" name="sort" onchange="this.form.submit()">
-                            <option value="newest" selected="@(string.IsNullOrEmpty(Model.SortOption) || Model.SortOption == "newest" ? "selected" : null)">Mới nhất</option>
-                            <option value="price-asc" selected="@(Model.SortOption == "price-asc" ? "selected" : null)">Giá tăng dần</option>
-                            <option value="price-desc" selected="@(Model.SortOption == "price-desc" ? "selected" : null)">Giá giảm dần</option>
-                    </select>
-                </div>
-                </form>
+<div class="row g-4">
+    @if (!Model.Products.Any())
+    {
+        <div class="col-12">
+            <div class="glass-panel p-5 text-center">
+                <p class="text-muted">Chưa có sản phẩm trong danh mục này.</p>
             </div>
         </div>
-    </div>
-    <div class="col-md-9">
-        <h2 class="h5 mb-3">@Model.CategoryName</h2>
-        <div class="row g-4">
-            @if (!Model.Products.Any())
-            {
-                <p>Chưa có sản phẩm trong danh mục này.</p>
-            }
-            else
-            {
-                        foreach (var p in Model.Products)
+    }
+    else
+    {
+        foreach (var p in Model.Products)
+        {
+            <div class="col-6 col-md-3">
+                <div class="glass-panel overflow-hidden h-100 d-flex flex-column">
+                    <div class="position-relative">
+                        <a asp-controller="Product" asp-action="Details" asp-route-id="@p.Id" class="text-decoration-none">
+                            @if (!string.IsNullOrEmpty(p.MainImageUrl))
+                            {
+                                <img src="@p.MainImageUrl" class="w-100 object-fit-cover" style="height: 250px;" alt="@p.Name">
+                            }
+                            else
+                            {
+                                <div class="w-100 bg-light d-flex align-items-center justify-content-center" style="height: 250px;">
+                                    <span class="text-muted small">Ảnh sản phẩm</span>
+                                </div>
+                            }
+                        </a>
+                        @if (p.DiscountPrice.HasValue)
                         {
-                            <div class="col-6 col-md-4">
-                                <div class="card product-card h-100">
-                                    <a asp-controller="Product" asp-action="Details" asp-route-id="@p.Id" class="text-decoration-none">
-                                <div class="ratio ratio-4x3 bg-light rounded-top">
-                                    @if (!string.IsNullOrEmpty(p.MainImageUrl))
-                                    {
-                                        <img src="@p.MainImageUrl" class="img-fluid rounded-top" alt="@p.Name" />
-                                    }
-                                    else
-                                    {
-                                        <span class="text-muted d-flex align-items-center justify-content-center">Ảnh sản phẩm</span>
-                                    }
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title small mb-1">@p.Name</h5>
-                                    <p class="card-text fw-bold mb-2 text-danger">
-                                        @String.Format("{0:N0}₫", p.DiscountPrice ?? p.Price)
-                                    </p>
-                                </div>
-                            </a>
-                            <div class="card-footer bg-white border-0 pb-3 px-3">
-                                <form asp-controller="Cart" asp-action="Add" method="post" class="d-grid">
-                                    <input type="hidden" name="productId" value="@p.Id" />
-                                    <button type="submit" class="btn btn-sm btn-outline-dark">Thêm vào giỏ</button>
-                                </form>
-                            </div>
+                            <span class="badge bg-danger position-absolute top-0 start-0 m-2">-@((int)((1 - (p.DiscountPrice.Value / p.Price)) * 100))%</span>
+                        }
+                        <form asp-controller="Cart" asp-action="Add" method="post" class="position-absolute bottom-0 end-0 m-3">
+                            <input type="hidden" name="productId" value="@p.Id" />
+                            <input type="hidden" name="quantity" value="1" />
+                            <button type="submit" class="btn btn-light rounded-circle shadow-sm border-0" style="width:40px;height:40px;" title="Thêm vào giỏ">
+                                <i class="ph-bold ph-plus"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="p-3 d-flex flex-column flex-grow-1">
+                        <a asp-controller="Product" asp-action="Details" asp-route-id="@p.Id" class="text-decoration-none">
+                            <h5 class="fs-6 fw-bold mb-1 text-white text-truncate">@p.Name</h5>
+                        </a>
+                        <div class="mt-auto pt-2 d-flex justify-content-between align-items-center">
+                            <span class="text-primary fw-bold">@String.Format("{0:N0}₫", p.DiscountPrice ?? p.Price)</span>
+                            @if (p.DiscountPrice.HasValue)
+                            {
+                                <small class="text-muted text-decoration-line-through">@String.Format("{0:N0}₫", p.Price)</small>
+                            }
                         </div>
                     </div>
-                }
-            }
-        </div>
-    </div>
+                </div>
+            </div>
+        }
+    }
 </div>
 
 

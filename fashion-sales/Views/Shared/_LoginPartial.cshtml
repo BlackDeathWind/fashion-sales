@@ -5,27 +5,24 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <div class="dropdown">
+        <a class="btn btn-sm btn-outline-light rounded-pill px-3 dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             @User.Identity?.Name
         </a>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-            <li><a class="dropdown-item" asp-controller="Account" asp-action="Profile">Tài khoản của tôi</a></li>
-            <li><a class="dropdown-item" asp-controller="Order" asp-action="MyOrders">Đơn hàng của tôi</a></li>
-            <li><hr class="dropdown-divider" /></li>
+        <ul class="dropdown-menu dropdown-menu-end bg-dark border-secondary" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item text-white" asp-controller="Account" asp-action="Profile">Tài khoản của tôi</a></li>
+            <li><a class="dropdown-item text-white" asp-controller="Order" asp-action="MyOrders">Đơn hàng của tôi</a></li>
+            <li><hr class="dropdown-divider border-secondary" /></li>
             <li>
                 <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
-                    <button type="submit" class="dropdown-item">Đăng xuất</button>
+                    <button type="submit" class="dropdown-item text-white bg-transparent border-0 w-100 text-start">Đăng xuất</button>
                 </form>
             </li>
         </ul>
-    </li>
+    </div>
 }
 else
 {
-    <li class="nav-item">
-        <a class="btn btn-dark" asp-controller="Account" asp-action="Register">Đăng ký</a>
-    </li>
+    <a class="btn btn-sm btn-outline-light rounded-pill px-3" asp-controller="Account" asp-action="Login">Đăng nhập</a>
 }
-
 

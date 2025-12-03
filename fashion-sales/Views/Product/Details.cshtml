@@ -3,8 +3,8 @@
     ViewData["Title"] = Model.Name;
 }
 
-<nav aria-label="breadcrumb" class="mb-3">
-    <ol class="breadcrumb">
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb small">
         <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
         <li class="breadcrumb-item">
             <a asp-controller="Category" asp-action="Index" asp-route-id="@Model.CategoryId">@Model.Category.Name</a>
@@ -13,54 +13,110 @@
     </ol>
 </nav>
 
-<div class="row">
-    <div class="col-md-6 mb-4">
-        <div class="ratio ratio-4x3 bg-light rounded-4 mb-3">
-            @if (!string.IsNullOrEmpty(Model.MainImageUrl))
+<div class="row g-5">
+    <!-- Left: Images -->
+    <div class="col-lg-7">
+        <div class="d-flex gap-3">
+            <div class="d-flex flex-column gap-2" style="width: 80px;">
+                @if (!string.IsNullOrEmpty(Model.MainImageUrl))
+                {
+                    <img src="@Model.MainImageUrl" class="thumb-img active" alt="@Model.Name" onclick="changeMainImage(this.src)">
+                    <img src="@Model.MainImageUrl" class="thumb-img" alt="@Model.Name" onclick="changeMainImage(this.src)">
+                }
+                else
+                {
+                    <div class="thumb-img active bg-light d-flex align-items-center justify-content-center">
+                        <span class="text-muted small">Ảnh</span>
+                    </div>
+                }
+            </div>
+            <div class="flex-grow-1 position-relative rounded-4 overflow-hidden border border-white border-opacity-10">
+                @if (Model.DiscountPrice.HasValue)
+                {
+                    <span class="position-absolute top-0 start-0 m-3 badge bg-danger rounded-pill px-3 py-2">SALE</span>
+                }
+                @if (!string.IsNullOrEmpty(Model.MainImageUrl))
+                {
+                    <img src="@Model.MainImageUrl" class="w-100 h-auto d-block" alt="@Model.Name" id="mainProductImage">
+                }
+                else
+                {
+                    <div class="w-100 bg-light d-flex align-items-center justify-content-center" style="min-height: 500px;">
+                        <span class="text-muted">Ảnh sản phẩm</span>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Right: Info -->
+    <div class="col-lg-5">
+        <h1 class="display-6 fw-bold mb-2">@Model.Name</h1>
+        
+        <div class="mb-4">
+            <span class="h2 text-primary fw-bold">@String.Format("{0:N0}₫", Model.DiscountPrice ?? Model.Price)</span>
+            @if (Model.DiscountPrice.HasValue)
             {
-                <img src="@Model.MainImageUrl" class="img-fluid rounded-4" alt="@Model.Name" />
+                <span class="text-decoration-line-through text-muted ms-2">@String.Format("{0:N0}₫", Model.Price)</span>
+            }
+        </div>
+
+        <div class="d-flex align-items-center gap-2 mb-4">
+            @if (Model.StockQuantity > 0)
+            {
+                <span class="badge badge-success">Còn hàng</span>
             }
             else
             {
-                <span class="text-muted d-flex align-items-center justify-content-center">Ảnh sản phẩm</span>
+                <span class="badge badge-danger">Hết hàng</span>
             }
+            <span class="text-muted small">• Mã SP: #@Model.Id</span>
         </div>
-    </div>
-    <div class="col-md-6">
-        <h1 class="h3 fw-bold mb-2">@Model.Name</h1>
-        <div class="mb-3">
-            <span class="h4 text-danger fw-bold">@String.Format("{0:N0}₫", Model.DiscountPrice ?? Model.Price)</span>
-            @if (Model.DiscountPrice.HasValue)
-            {
-                <span class="text-muted text-decoration-line-through ms-2">@String.Format("{0:N0}₫", Model.Price)</span>
-            }
-        </div>
-        <p class="text-muted">Tình trạng: @(Model.StockQuantity > 0 ? "Còn hàng" : "Hết hàng")</p>
 
-        <form asp-controller="Cart" asp-action="Add" method="post" class="mt-3">
+        <!-- Add to Cart Form -->
+        <form asp-controller="Cart" asp-action="Add" method="post" class="glass-panel p-4 mb-4">
             <input type="hidden" name="productId" value="@Model.Id" />
             <div class="mb-3">
                 <label class="form-label">Số lượng</label>
-                <input type="number" name="quantity" value="1" min="1" class="form-control" style="max-width: 120px;" />
+                <div class="d-flex gap-3">
+                    <input type="number" name="quantity" value="1" min="1" max="@Model.StockQuantity" class="form-control form-control-modern text-center" style="width: 80px;">
+                    @if (Model.StockQuantity <= 0)
+                    {
+                        <button type="submit" class="btn btn-primary-modern flex-grow-1" disabled>
+                            <i class="ph-bold ph-shopping-cart me-2"></i> Hết hàng
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-primary-modern flex-grow-1">
+                            <i class="ph-bold ph-shopping-cart me-2"></i> Thêm vào giỏ
+                        </button>
+                    }
+                </div>
             </div>
-            @if (Model.StockQuantity <= 0)
-            {
-                <button type="submit" class="btn btn-dark btn-lg" disabled>
-                    Thêm vào giỏ
-                </button>
-            }
-            else
-            {
-                <button type="submit" class="btn btn-dark btn-lg">
-                    Thêm vào giỏ
-                </button>
-            }
         </form>
 
-        <hr class="my-4" />
+        <div class="text-muted small">
+            <p class="mb-2"><i class="ph-fill ph-check-circle text-primary me-2"></i>Chất liệu cao cấp, bền màu.</p>
+            <p class="mb-2"><i class="ph-fill ph-check-circle text-primary me-2"></i>Thiết kế hiện đại, phong cách.</p>
+            <p><i class="ph-fill ph-check-circle text-primary me-2"></i>Đổi trả miễn phí trong 7 ngày.</p>
+        </div>
+
+        <hr class="my-4 border-secondary border-opacity-10" />
         <h2 class="h6 fw-bold mb-2">Mô tả sản phẩm</h2>
-        <p>@(string.IsNullOrWhiteSpace(Model.Description) ? "Đang cập nhật..." : Model.Description)</p>
+        <p class="text-muted">@(string.IsNullOrWhiteSpace(Model.Description) ? "Đang cập nhật..." : Model.Description)</p>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        function changeMainImage(src) {
+            document.getElementById('mainProductImage').src = src;
+            document.querySelectorAll('.thumb-img').forEach(img => img.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
+}
+
 
 

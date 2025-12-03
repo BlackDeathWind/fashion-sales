@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fashion Sales - Inner Pages Design System</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* =========================================
+           COPY THIS CSS TO site.css
+           ========================================= */
+        :root {
+            --fs-bg: #050505;
+            --fs-surface: rgba(20, 20, 20, 0.6);
+            --fs-surface-border: rgba(255, 255, 255, 0.08);
+            --fs-primary: #f97316;
+            --fs-primary-glow: rgba(249, 115, 22, 0.5);
+            --fs-text-main: #ffffff;
+            --fs-text-muted: #9ca3af;
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--fs-bg);
+            color: var(--fs-text-main);
+            /* Mesh Gradient Background */
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(76, 29, 149, 0.1), transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(249, 115, 22, 0.05), transparent 40%);
+            background-attachment: fixed;
+        }
+
+        /* --- Global Component Styles --- */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--fs-surface-border);
+            border-radius: 16px;
+        }
+
+        .btn-primary-modern {
+            background: var(--fs-primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.2);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--fs-primary-glow);
+            color: white;
+            background: #ea580c;
+        }
+
+        .form-control-modern {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--fs-surface-border);
+            color: white;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+        }
+        .form-control-modern:focus {
+            background: rgba(0,0,0,0.5);
+            border-color: var(--fs-primary);
+            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+            color: white;
+            outline: none;
+        }
+        .form-control-modern::placeholder { color: rgba(255,255,255,0.3); }
+
+        .form-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--fs-text-muted);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Table Styling */
+        .table-modern {
+            width: 100%;
+            color: var(--fs-text-main);
+            vertical-align: middle;
+        }
+        .table-modern th {
+            background: transparent;
+            border-bottom: 1px solid var(--fs-surface-border);
+            color: var(--fs-text-muted);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            padding: 1rem;
+        }
+        .table-modern td {
+            background: transparent;
+            border-bottom: 1px solid var(--fs-surface-border);
+            padding: 1rem;
+        }
+        .table-modern tr:last-child td { border-bottom: none; }
+
+        /* Badge Styling */
+        .badge-modern {
+            padding: 0.5em 1em;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            letter-spacing: 0.02em;
+        }
+        .badge-success { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.2); }
+        .badge-warning { background: rgba(234, 179, 8, 0.2); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.2); }
+        .badge-danger { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); }
+
+        /* --- Page Specifics --- */
+        
+        /* Product Details */
+        .thumb-img {
+            width: 100%; aspect-ratio: 1; object-fit: cover;
+            border-radius: 8px; cursor: pointer; border: 2px solid transparent; opacity: 0.6;
+            transition: var(--transition-smooth);
+        }
+        .thumb-img.active, .thumb-img:hover { border-color: var(--fs-primary); opacity: 1; }
+
+        /* Auth Pages */
+        .auth-container { min-height: 80vh; display: flex; align-items: center; justify-content: center; }
+        .auth-card { width: 100%; max-width: 450px; padding: 3rem; }
+
+        /* Breadcrumb */
+        .breadcrumb-item a { color: var(--fs-text-muted); text-decoration: none; }
+        .breadcrumb-item.active { color: white; }
+        .breadcrumb-item + .breadcrumb-item::before { color: var(--fs-surface-border); }
+
+    </style>
+</head>
+<body>
+
+    <!-- NAV Placeholder -->
+    <nav class="navbar navbar-dark bg-transparent border-bottom border-secondary border-opacity-10 mb-5">
+        <div class="container py-2">
+            <span class="navbar-brand fw-bold">FS UI KIT</span>
+            <div class="text-muted small">Reference for ASP.NET Core Views</div>
+        </div>
+    </nav>
+
+    <div class="container pb-5">
+
+        <!-- ======================================================================
+             SECTION 1: PRODUCT DETAILS (Matches Details.cshtml)
+             ====================================================================== -->
+        <div class="text-warning mb-2 mt-5">--- VIEW: Product/Details.cshtml ---</div>
+        
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb small">
+                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="#">Thời trang nữ</a></li>
+                <li class="breadcrumb-item active">Áo khoác</li>
+            </ol>
+        </nav>
+
+        <div class="row g-5">
+            <!-- Left: Images -->
+            <div class="col-lg-7">
+                <div class="d-flex gap-3">
+                    <div class="d-flex flex-column gap-2" style="width: 80px;">
+                        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=200" class="thumb-img active" alt="">
+                        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=200" class="thumb-img" alt="">
+                    </div>
+                    <div class="flex-grow-1 position-relative rounded-4 overflow-hidden border border-white border-opacity-10">
+                        <span class="position-absolute top-0 start-0 m-3 badge bg-danger rounded-pill px-3 py-2">SALE</span>
+                        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800" class="w-100 h-auto d-block" alt="Product">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Info -->
+            <div class="col-lg-5">
+                <h1 class="display-6 fw-bold mb-2">Áo Khoác Denim Modern</h1>
+                
+                <div class="mb-4">
+                    <span class="h2 text-primary fw-bold">850.000₫</span>
+                    <span class="text-decoration-line-through text-muted ms-2">1.200.000₫</span>
+                </div>
+
+                <div class="d-flex align-items-center gap-2 mb-4">
+                    <span class="badge badge-success">Còn hàng</span>
+                    <span class="text-muted small">• Mã SP: #DK2025</span>
+                </div>
+
+                <!-- Add to Cart Form -->
+                <form class="glass-panel p-4 mb-4">
+                    <div class="mb-3">
+                        <label class="form-label">Số lượng</label>
+                        <div class="d-flex gap-3">
+                            <input type="number" value="1" min="1" class="form-control form-control-modern text-center" style="width: 80px;">
+                            <button type="submit" class="btn btn-primary-modern flex-grow-1">
+                                <i class="ph-bold ph-shopping-cart me-2"></i> Thêm vào giỏ
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="text-muted small">
+                    <p class="mb-2"><i class="ph-fill ph-check-circle text-primary me-2"></i>Chất liệu denim cao cấp, bền màu.</p>
+                    <p class="mb-2"><i class="ph-fill ph-check-circle text-primary me-2"></i>Thiết kế form rộng, phong cách Hàn Quốc.</p>
+                    <p><i class="ph-fill ph-check-circle text-primary me-2"></i>Đổi trả miễn phí trong 7 ngày.</p>
+                </div>
+            </div>
+        </div>
+
+        <hr class="border-secondary border-opacity-10 my-5">
+
+        <!-- ======================================================================
+             SECTION 2: CATEGORY & SEARCH (Matches Category.cshtml & SearchResults.cshtml)
+             ====================================================================== -->
+        <div class="text-warning mb-2">--- VIEW: Category/Index.cshtml & SearchResults.cshtml ---</div>
+
+        <div class="d-flex justify-content-between align-items-end mb-4">
+            <div>
+                <h2 class="fw-bold mb-1">Thời trang Nam</h2> <!-- Or "Kết quả tìm kiếm..." -->
+                <p class="text-muted mb-0">Hiển thị 12 sản phẩm</p>
+            </div>
+            
+            <!-- Filters (Simplified for UI Kit) -->
+            <div class="d-flex gap-2">
+                <select class="form-select form-select-sm bg-dark text-white border-secondary">
+                    <option>Giá: Thấp đến Cao</option>
+                    <option>Giá: Cao đến Thấp</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Product Item -->
+            <div class="col-6 col-md-3">
+                <div class="glass-panel overflow-hidden h-100 d-flex flex-column">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500" class="w-100 object-fit-cover" style="height: 250px;" alt="...">
+                        <button class="btn btn-light position-absolute bottom-0 end-0 m-3 rounded-circle shadow-sm" style="width:40px;height:40px;"><i class="ph-bold ph-plus"></i></button>
+                    </div>
+                    <div class="p-3 d-flex flex-column flex-grow-1">
+                        <h5 class="fs-6 fw-bold mb-1 text-white text-truncate">Giày Sneaker Urban</h5>
+                        <div class="mt-auto pt-2 d-flex justify-content-between align-items-center">
+                            <span class="text-primary fw-bold">1.250.000₫</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product Item -->
+            <div class="col-6 col-md-3">
+                <div class="glass-panel overflow-hidden h-100 d-flex flex-column">
+                    <div class="position-relative">
+                        <span class="badge bg-danger position-absolute top-0 start-0 m-2">-20%</span>
+                        <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500" class="w-100 object-fit-cover" style="height: 250px;" alt="...">
+                        <button class="btn btn-light position-absolute bottom-0 end-0 m-3 rounded-circle shadow-sm" style="width:40px;height:40px;"><i class="ph-bold ph-plus"></i></button>
+                    </div>
+                    <div class="p-3 d-flex flex-column flex-grow-1">
+                        <h5 class="fs-6 fw-bold mb-1 text-white text-truncate">Áo Khoác Da Biker</h5>
+                        <div class="mt-auto pt-2 d-flex justify-content-between align-items-center">
+                            <span class="text-primary fw-bold">850.000₫</span>
+                            <small class="text-muted text-decoration-line-through">1.0tr</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="border-secondary border-opacity-10 my-5">
+
+        <!-- ======================================================================
+             SECTION 3: SHOPPING CART (Matches Cart.cshtml)
+             ====================================================================== -->
+        <div class="text-warning mb-2">--- VIEW: Cart/Index.cshtml ---</div>
+
+        <div class="row">
+            <div class="col-lg-8 mb-4">
+                <div class="glass-panel p-0 overflow-hidden">
+                    <div class="table-responsive">
+                        <table class="table table-modern mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th>Đơn giá</th>
+                                    <th class="text-center">Số lượng</th>
+                                    <th class="text-end">Thành tiền</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Cart Item 1 -->
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100" class="rounded-3" style="width: 60px; height: 60px; object-fit: cover;">
+                                            <div>
+                                                <div class="fw-bold text-white">Giày Sneaker Urban</div>
+                                                <small class="text-muted">Size: 42</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>1.250.000₫</td>
+                                    <td>
+                                        <div class="d-flex justify-content-center">
+                                            <input type="number" class="form-control form-control-modern text-center p-1" value="1" style="width: 60px;">
+                                        </div>
+                                    </td>
+                                    <td class="text-end fw-bold text-primary">1.250.000₫</td>
+                                    <td class="text-end"><button class="btn btn-sm text-danger"><i class="ph-bold ph-trash"></i></button></td>
+                                </tr>
+                                <!-- Cart Item 2 -->
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=100" class="rounded-3" style="width: 60px; height: 60px; object-fit: cover;">
+                                            <div>
+                                                <div class="fw-bold text-white">Áo Khoác Da</div>
+                                                <small class="text-muted">Size: L</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>850.000₫</td>
+                                    <td>
+                                        <div class="d-flex justify-content-center">
+                                            <input type="number" class="form-control form-control-modern text-center p-1" value="2" style="width: 60px;">
+                                        </div>
+                                    </td>
+                                    <td class="text-end fw-bold text-primary">1.700.000₫</td>
+                                    <td class="text-end"><button class="btn btn-sm text-danger"><i class="ph-bold ph-trash"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="glass-panel p-4">
+                    <h5 class="fw-bold mb-4">Tổng giỏ hàng</h5>
+                    <div class="d-flex justify-content-between mb-2 text-muted">
+                        <span>Tạm tính</span>
+                        <span>2.950.000₫</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-4 text-muted">
+                        <span>Phí vận chuyển</span>
+                        <span>Miễn phí</span>
+                    </div>
+                    <div class="border-top border-secondary border-opacity-25 pt-3 mb-4 d-flex justify-content-between align-items-center">
+                        <span class="fw-bold text-white">Tổng cộng</span>
+                        <span class="h4 mb-0 text-primary fw-bold">2.950.000₫</span>
+                    </div>
+                    <a href="#" class="btn btn-primary-modern w-100 text-center">Thanh toán ngay</a>
+                    <div class="text-center mt-3">
+                        <a href="#" class="text-muted small text-decoration-none hover-underline">Tiếp tục mua sắm</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="border-secondary border-opacity-10 my-5">
+
+        <!-- ======================================================================
+             SECTION 4: CHECKOUT (Matches Checkout.cshtml)
+             ====================================================================== -->
+        <div class="text-warning mb-2">--- VIEW: Checkout/Index.cshtml ---</div>
+
+        <div class="row">
+            <div class="col-lg-7">
+                <h4 class="mb-4 fw-bold">Thông tin giao hàng</h4>
+                <form class="glass-panel p-4 mb-4">
+                    <!-- Address Picker Section -->
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Tỉnh / Thành</label>
+                            <input type="text" class="form-control form-control-modern" placeholder="Chọn Tỉnh/Thành">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Quận / Huyện</label>
+                            <input type="text" class="form-control form-control-modern" placeholder="Chọn Quận/Huyện">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Phường / Xã</label>
+                            <input type="text" class="form-control form-control-modern" placeholder="Chọn Phường/Xã">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Địa chỉ cụ thể</label>
+                        <input type="text" class="form-control form-control-modern" placeholder="Số nhà, tên đường...">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Ghi chú đơn hàng (Tùy chọn)</label>
+                        <textarea class="form-control form-control-modern" rows="2"></textarea>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="col-lg-5">
+                <div class="glass-panel p-4">
+                    <h5 class="fw-bold mb-3">Đơn hàng của bạn</h5>
+                    <!-- Small Summary List -->
+                    <div class="d-flex align-items-center justify-content-between mb-3 pb-3 border-bottom border-secondary border-opacity-10">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="bg-secondary rounded" style="width:40px;height:40px;"></div>
+                            <span class="small">Giày Sneaker (x1)</span>
+                        </div>
+                        <span class="small fw-bold">1.250.000₫</span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <span class="fw-bold">Tổng thanh toán</span>
+                        <span class="h4 text-primary mb-0 fw-bold">1.250.000₫</span>
+                    </div>
+
+                    <button class="btn btn-primary-modern w-100">Đặt hàng ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <hr class="border-secondary border-opacity-10 my-5">
+
+        <!-- ======================================================================
+             SECTION 5: AUTHENTICATION (Matches Login.cshtml / Register.cshtml)
+             ====================================================================== -->
+        <div class="text-warning mb-2">--- VIEW: Account/Login.cshtml & Register.cshtml ---</div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="glass-panel p-5">
+                    <div class="text-center mb-4">
+                        <h3 class="fw-bold">Đăng ký thành viên</h3>
+                        <p class="text-muted small">Tạo tài khoản để theo dõi đơn hàng dễ dàng</p>
+                    </div>
+
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Số điện thoại / Email</label>
+                            <input type="text" class="form-control form-control-modern ps-3" placeholder="Nhập thông tin liên hệ">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Mật khẩu</label>
+                            <input type="password" class="form-control form-control-modern ps-3" placeholder="••••••••">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Xác nhận mật khẩu</label>
+                            <input type="password" class="form-control form-control-modern ps-3" placeholder="••••••••">
+                        </div>
+
+                        <button class="btn btn-primary-modern w-100 mb-3">Đăng ký</button>
+                        
+                        <div class="text-center">
+                            <span class="text-muted small">Đã có tài khoản? </span>
+                            <a href="#" class="text-white small fw-bold">Đăng nhập</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <hr class="border-secondary border-opacity-10 my-5">
+
+        <!-- ======================================================================
+             SECTION 6: PROFILE (Matches Profile.cshtml)
+             ====================================================================== -->
+        <div class="text-warning mb-2">--- VIEW: Account/Profile.cshtml ---</div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="glass-panel p-4">
+                    <h3 class="fw-bold mb-4">Thông tin tài khoản</h3>
+                    
+                    <form>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Họ và tên</label>
+                                <input type="text" class="form-control form-control-modern" value="Nguyễn Văn A">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control form-control-modern" value="nguyenvana@email.com" readonly>
+                            </div>
+                        </div>
+
+                        <h5 class="fw-bold mt-4 mb-3 fs-6 text-primary">Địa chỉ mặc định</h5>
+                        <!-- Address Inputs mimicking the JS ones -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Tỉnh / Thành</label>
+                                <select class="form-control form-control-modern bg-dark"><option>TP. Hồ Chí Minh</option></select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Quận / Huyện</label>
+                                <select class="form-control form-control-modern bg-dark"><option>Quận 1</option></select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Phường / Xã</label>
+                                <select class="form-control form-control-modern bg-dark"><option>Phường Bến Nghé</option></select>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-3 mt-4">
+                            <button class="btn btn-outline-light rounded-pill px-4">Hủy</button>
+                            <button class="btn btn-primary-modern px-4">Cập nhật</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <hr class="border-secondary border-opacity-10 my-5">
+
+        <!-- ======================================================================
+             SECTION 7: MY ORDERS (Matches MyOrders.cshtml)
+             ====================================================================== -->
+        <div class="text-warning mb-2">--- VIEW: Order/MyOrders.cshtml ---</div>
+
+        <div class="glass-panel p-0 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table table-modern mb-0">
+                    <thead>
+                        <tr>
+                            <th>Mã đơn</th>
+                            <th>Ngày đặt</th>
+                            <th class="text-end">Tổng tiền</th>
+                            <th>Trạng thái</th>
+                            <th class="text-end">Chi tiết</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fw-bold text-white">#ORD-2025-001</td>
+                            <td>03/12/2025 09:15</td>
+                            <td class="text-end fw-bold">1.250.000₫</td>
+                            <td><span class="badge badge-warning">Đang xử lý</span></td>
+                            <td class="text-end"><a href="#" class="btn btn-sm btn-outline-light rounded-pill px-3">Xem</a></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold text-white">#ORD-2025-002</td>
+                            <td>01/12/2025 14:30</td>
+                            <td class="text-end fw-bold">550.000₫</td>
+                            <td><span class="badge badge-success">Thành công</span></td>
+                            <td class="text-end"><a href="#" class="btn btn-sm btn-outline-light rounded-pill px-3">Xem</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <hr class="border-secondary border-opacity-10 my-5">
+
+        <!-- ======================================================================
+             SECTION 8: SUCCESS (Matches Success.cshtml)
+             ====================================================================== -->
+        <div class="text-warning mb-2">--- VIEW: Order/Success.cshtml ---</div>
+
+        <div class="text-center py-5">
+            <div class="mb-4 d-inline-flex align-items-center justify-content-center rounded-circle bg-success bg-opacity-10 text-success" style="width: 80px; height: 80px;">
+                <i class="ph-fill ph-check fs-1"></i>
+            </div>
+            <h2 class="fw-bold mb-3">Đặt hàng thành công!</h2>
+            <p class="text-muted mb-4">
+                Mã đơn hàng của bạn là: <strong class="text-white">#ORD-83921</strong>.<br>
+                Chúng tôi sẽ liên hệ với bạn sớm nhất để xác nhận.
+            </p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="#" class="btn btn-primary-modern">Tiếp tục mua sắm</a>
+                <a href="#" class="btn btn-outline-light rounded-pill px-4 py-2 fw-bold" style="border-width: 2px;">Đơn hàng của tôi</a>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="py-5"></div>
+</body>
+</html>

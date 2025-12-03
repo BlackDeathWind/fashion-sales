@@ -3,38 +3,66 @@
     ViewData["Title"] = "Đơn hàng của tôi";
 }
 
-<h1 class="h4 mb-3">Đơn hàng của tôi</h1>
+<h1 class="h4 mb-4 fw-bold">Đơn hàng của tôi</h1>
 
 @if (!Model.Any())
 {
-    <p>Bạn chưa có đơn hàng nào.</p>
+    <div class="glass-panel p-5 text-center">
+        <i class="ph ph-package fs-1 text-muted mb-3"></i>
+        <p class="text-muted">Bạn chưa có đơn hàng nào.</p>
+        <a asp-controller="Category" asp-action="Index" class="btn btn-primary-modern mt-3">Tiếp tục mua sắm</a>
+    </div>
 }
 else
 {
-    <div class="table-responsive">
-        <table class="table align-middle">
-            <thead>
-                <tr>
-                    <th>Mã đơn</th>
-                    <th>Ngày đặt</th>
-                    <th class="text-end">Tổng tiền</th>
-                    <th>Trạng thái</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var o in Model)
-                {
+    <div class="glass-panel p-0 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-modern mb-0">
+                <thead>
                     <tr>
-                        <td>@o.OrderCode</td>
-                        <td>@o.OrderDate.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
-                        <td class="text-end">@String.Format("{0:N0}₫", o.TotalAmount)</td>
-                        <td>
-                            @o.Status.ToString()
-                        </td>
+                        <th>Mã đơn</th>
+                        <th>Ngày đặt</th>
+                        <th class="text-end">Tổng tiền</th>
+                        <th>Trạng thái</th>
+                        <th class="text-end">Chi tiết</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var o in Model)
+                    {
+                        <tr>
+                            <td class="fw-bold text-white">@o.OrderCode</td>
+                            <td>@o.OrderDate.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                            <td class="text-end fw-bold">@String.Format("{0:N0}₫", o.TotalAmount)</td>
+                            <td>
+                                @{
+                                    var statusClass = o.Status.ToString() switch
+                                    {
+                                        "Pending" => "badge-warning",
+                                        "Processing" => "badge-warning",
+                                        "Completed" => "badge-success",
+                                        "Cancelled" => "badge-danger",
+                                        _ => "badge-warning"
+                                    };
+                                    var statusText = o.Status.ToString() switch
+                                    {
+                                        "Pending" => "Đang xử lý",
+                                        "Processing" => "Đang xử lý",
+                                        "Completed" => "Thành công",
+                                        "Cancelled" => "Đã hủy",
+                                        _ => o.Status.ToString()
+                                    };
+                                }
+                                <span class="badge @statusClass">@statusText</span>
+                            </td>
+                            <td class="text-end">
+                                <a href="#" class="btn btn-sm btn-outline-light rounded-pill px-3">Xem</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 }
 
