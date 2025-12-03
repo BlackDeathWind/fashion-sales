@@ -27,8 +27,17 @@ namespace fashion_sales.Controllers
             // Lấy tổng số đơn hàng
             var totalOrders = await _context.Orders.CountAsync();
 
+            // Lấy 4 sản phẩm mới nhất đang active, bao gồm Category
+            var latestProducts = await _context.Products
+                .Where(p => p.IsActive)
+                .Include(p => p.Category)
+                .OrderByDescending(p => p.CreatedAt)
+                .Take(4)
+                .ToListAsync();
+
             ViewBag.TotalProducts = totalProducts;
             ViewBag.TotalOrders = totalOrders;
+            ViewBag.LatestProducts = latestProducts;
 
             return View();
         }

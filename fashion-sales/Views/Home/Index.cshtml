@@ -121,99 +121,47 @@
     <div class="container">
         <h2 class="fw-bold mb-4 text-center reveal">Đang thịnh hành</h2>
         
-    <div class="row g-4">
-            <!-- Product 1 -->
-            <div class="col-6 col-md-3 reveal">
-                <div class="product-card-modern">
-                    <div class="product-img-box">
-                        <span class="position-absolute top-0 start-0 m-2 badge bg-danger rounded-1">GIẢM GIÁ</span>
-                        <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&q=80&w=400" alt="Product">
-                        <div class="product-actions">
-                            <button class="action-btn" title="Thêm vào giỏ"><i class="ph ph-shopping-bag"></i></button>
-                            <button class="action-btn" title="Xem nhanh"><i class="ph ph-eye"></i></button>
-                        </div>
-                    </div>
-                    <div>
-                        <small class="text-muted text-uppercase" style="font-size: 0.7rem;">Cotton</small>
-                        <h5 class="fw-bold text-white mb-1 fs-6">Áo dài tay cơ bản</h5>
-                        <div class="d-flex justify-content-between align-items-center mt-2">
-                            <span class="price-tag">1.050.000₫</span>
-                            <div class="text-warning small">
-                                <i class="ph-fill ph-star"></i> 4.8
+    @{
+        var products = ViewBag.LatestProducts as List<fashion_sales.Models.Entities.Product>;
+    }
+    @if (products != null && products.Any())
+    {
+        <div class="row g-4">
+            @foreach (var product in products)
+            {
+                <div class="col-6 col-md-3 reveal">
+                    <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="text-decoration-none">
+                        <div class="product-card-modern">
+                            <div class="product-img-box">
+                                @if (product.DiscountPrice.HasValue && product.DiscountPrice < product.Price)
+                                {
+                                    <span class="position-absolute top-0 start-0 m-2 badge bg-danger rounded-1">GIẢM GIÁ</span>
+                                }
+                                <img src="@product.MainImageUrl" alt="@product.Name">
+                                <div class="product-actions">
+                                    <button class="action-btn" title="Thêm vào giỏ"><i class="ph ph-shopping-bag"></i></button>
+                                    <button class="action-btn" title="Xem nhanh"><i class="ph ph-eye"></i></button>
+                                </div>
+                            </div>
+                            <div>
+                                <small class="text-muted text-uppercase" style="font-size: 0.7rem;">@(product.Category?.Name ?? "N/A")</small>
+                                <h5 class="fw-bold text-white mb-1 fs-6">@product.Name</h5>
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <span class="price-tag">@(product.DiscountPrice.HasValue && product.DiscountPrice < product.Price ? string.Format("{0:N0}", product.DiscountPrice.Value) : string.Format("{0:N0}", product.Price))₫</span>
+                                    <div class="text-warning small">
+                                        <i class="ph-fill ph-star"></i> 4.5
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
-            </div>
-
-            <!-- Product 2 -->
-            <div class="col-6 col-md-3 reveal">
-                <div class="product-card-modern">
-                    <div class="product-img-box">
-                        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=400" alt="Product">
-                        <div class="product-actions">
-                            <button class="action-btn"><i class="ph ph-shopping-bag"></i></button>
-                            <button class="action-btn"><i class="ph ph-eye"></i></button>
-                        </div>
-                    </div>
-                    <div>
-                        <small class="text-muted text-uppercase" style="font-size: 0.7rem;">Giày dép</small>
-                        <h5 class="fw-bold text-white mb-1 fs-6">Giày thể thao Urban</h5>
-                        <div class="d-flex justify-content-between align-items-center mt-2">
-                            <span class="price-tag">2.800.000₫</span>
-                            <div class="text-warning small">
-                                <i class="ph-fill ph-star"></i> 4.9
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 3 -->
-            <div class="col-6 col-md-3 reveal">
-                <div class="product-card-modern">
-                    <div class="product-img-box">
-                        <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=400" alt="Product">
-                        <div class="product-actions">
-                            <button class="action-btn"><i class="ph ph-shopping-bag"></i></button>
-                            <button class="action-btn"><i class="ph ph-eye"></i></button>
-                        </div>
-                    </div>
-                    <div>
-                        <small class="text-muted text-uppercase" style="font-size: 0.7rem;">Áo khoác</small>
-                        <h5 class="fw-bold text-white mb-1 fs-6">Áo khoác Denim</h5>
-                        <div class="d-flex justify-content-between align-items-center mt-2">
-                            <span class="price-tag">1.980.000₫</span>
-                            <div class="text-warning small">
-                                <i class="ph-fill ph-star"></i> 4.5
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 4 -->
-            <div class="col-6 col-md-3 reveal">
-                <div class="product-card-modern">
-                    <div class="product-img-box">
-                        <img src="https://images.unsplash.com/photo-1589363359656-347432770289?auto=format&fit=crop&q=80&w=400" alt="Product">
-                        <div class="product-actions">
-                            <button class="action-btn"><i class="ph ph-shopping-bag"></i></button>
-                            <button class="action-btn"><i class="ph ph-eye"></i></button>
-                        </div>
-                    </div>
-                    <div>
-                        <small class="text-muted text-uppercase" style="font-size: 0.7rem;">Phụ kiện</small>
-                        <h5 class="fw-bold text-white mb-1 fs-6">Kính mát Vintage</h5>
-                        <div class="d-flex justify-content-between align-items-center mt-2">
-                            <span class="price-tag">580.000₫</span>
-                            <div class="text-warning small">
-                                <i class="ph-fill ph-star"></i> 4.2
-                            </div>
-                        </div>
-                </div>
-                </div>
-            </div>
+            }
         </div>
+    }
+    else
+    {
+        <p class="text-center text-muted">Không có sản phẩm nào.</p>
+    }
     </div>
 </section>
