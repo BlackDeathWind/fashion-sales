@@ -57,7 +57,7 @@ else
                                 <span class="badge @statusClass">@statusText</span>
                             </td>
                             <td class="text-end">
-                                <a href="#" class="btn btn-sm btn-outline-light rounded-pill px-3">Xem</a>
+                                <a asp-controller="Order" asp-action="Details" asp-route-code="@o.OrderCode" class="btn btn-sm btn-outline-light rounded-pill px-3">Xem</a>
                             </td>
                         </tr>
                     }

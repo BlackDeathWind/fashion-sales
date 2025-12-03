@@ -62,6 +62,13 @@ public class OrderController : Controller
             ModelState.AddModelError(string.Empty, "Giỏ hàng đang trống.");
         }
 
+        // Validate address fields
+        if (!model.ProvinceCode.HasValue || !model.DistrictCode.HasValue || !model.WardCode.HasValue || string.IsNullOrWhiteSpace(model.StreetAddress))
+        {
+            TempData["ErrorMessage"] = "Vui lòng cập nhật đầy đủ thông tin địa chỉ giao hàng trước khi đặt hàng.";
+            return RedirectToAction("Profile", "Account");
+        }
+
         if (!ModelState.IsValid)
         {
             model.Items = cart;
@@ -84,7 +91,7 @@ public class OrderController : Controller
             addressParts.Add(model.DistrictName);
         if (model.ProvinceCode.HasValue && !string.IsNullOrWhiteSpace(model.ProvinceName))
             addressParts.Add(model.ProvinceName);
-        
+
         var fullAddress = addressParts.Any() ? string.Join(", ", addressParts) : model.ShippingAddress;
 
         var order = new Order
@@ -155,6 +162,33 @@ public class OrderController : Controller
             .ToListAsync();
 
         return View(orders);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Details(string code)
+    {
+        if (string.IsNullOrEmpty(code))
+        {
+            return RedirectToAction("MyOrders");
+        }
+
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return Challenge();
+        }
+
+        var order = await _context.Orders
+            .Include(o => o.Items)
+            .ThenInclude(i => i.Product)
+            .FirstOrDefaultAsync(o => o.OrderCode == code && o.UserId == user.Id);
+
+        if (order == null)
+        {
+            return RedirectToAction("MyOrders");
+        }
+
+        return View(order);
     }
 }
 

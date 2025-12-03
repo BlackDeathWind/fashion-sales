@@ -1,0 +1,139 @@
+@model Order
+@{
+    ViewData["Title"] = $"Chi tiết đơn hàng {Model.OrderCode}";
+}
+
+<div class="container">
+    <div class="d-flex align-items-center gap-3 mb-4">
+        <a asp-controller="Order" asp-action="MyOrders" class="btn btn-outline-light rounded-pill px-3">
+            <i class="ph ph-arrow-left me-2"></i>Quay lại
+        </a>
+        <h1 class="h4 mb-0 fw-bold">Chi tiết đơn hàng @Model.OrderCode</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="glass-panel p-4 mb-4">
+                <h5 class="fw-bold mb-3">Thông tin đơn hàng</h5>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="text-muted small">Mã đơn hàng</div>
+                        <div class="fw-bold text-white">@Model.OrderCode</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-muted small">Ngày đặt hàng</div>
+                        <div class="fw-bold text-white">@Model.OrderDate.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-muted small">Trạng thái</div>
+                        @{
+                            var statusClass = Model.Status.ToString() switch
+                            {
+                                "Pending" => "badge-warning",
+                                "Processing" => "badge-warning",
+                                "Completed" => "badge-success",
+                                "Cancelled" => "badge-danger",
+                                _ => "badge-warning"
+                            };
+                            var statusText = Model.Status.ToString() switch
+                            {
+                                "Pending" => "Đang xử lý",
+                                "Processing" => "Đang xử lý",
+                                "Completed" => "Thành công",
+                                "Cancelled" => "Đã hủy",
+                                _ => Model.Status.ToString()
+                            };
+                        }
+                        <span class="badge @statusClass">@statusText</span>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-muted small">Tổng tiền</div>
+                        <div class="h5 text-primary mb-0">@String.Format("{0:N0}₫", Model.TotalAmount)</div>
+                    </div>
+                </div>
+
+                <hr class="border-secondary my-4">
+
+                <div class="mb-3">
+                    <div class="text-muted small">Địa chỉ giao hàng</div>
+                    <div class="fw-bold text-white">@Model.ShippingAddress</div>
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(Model.Note))
+                {
+                    <div class="mb-3">
+                        <div class="text-muted small">Ghi chú</div>
+                        <div class="fw-bold text-white">@Model.Note</div>
+                    </div>
+                }
+            </div>
+
+            <div class="glass-panel p-4">
+                <h5 class="fw-bold mb-3">Sản phẩm đã đặt</h5>
+
+                <div class="table-responsive">
+                    <table class="table table-modern mb-0">
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th class="text-center">Số lượng</th>
+                                <th class="text-end">Đơn giá</th>
+                                <th class="text-end">Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="bg-secondary rounded" style="width:50px;height:50px;"></div>
+                                            <div>
+                                                <div class="fw-bold text-white">@item.Product?.Name</div>
+                                                <small class="text-muted">@item.Product?.Category?.Name</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">@item.Quantity</td>
+                                    <td class="text-end">@String.Format("{0:N0}₫", item.UnitPrice)</td>
+                                    <td class="text-end fw-bold">@String.Format("{0:N0}₫", item.TotalPrice)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <hr class="border-secondary my-3">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="fw-bold">Tổng cộng</span>
+                    <span class="h4 text-primary mb-0 fw-bold">@String.Format("{0:N0}₫", Model.TotalAmount)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="glass-panel p-4">
+                <h6 class="fw-bold mb-3">Hỗ trợ khách hàng</h6>
+                <p class="text-muted small mb-3">Nếu bạn có bất kỳ câu hỏi nào về đơn hàng, vui lòng liên hệ với chúng tôi.</p>
+
+                <div class="d-flex gap-2">
+                    <i class="ph ph-phone text-primary"></i>
+                    <div>
+                        <div class="text-white small fw-bold">Hotline</div>
+                        <div class="text-muted small">1900-xxxx</div>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 mt-3">
+                    <i class="ph ph-envelope text-primary"></i>
+                    <div>
+                        <div class="text-white small fw-bold">Email</div>
+                        <div class="text-muted small">support@fashionsales.vn</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
