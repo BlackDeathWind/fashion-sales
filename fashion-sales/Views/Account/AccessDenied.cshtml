@@ -1,0 +1,17 @@
+@{
+    ViewData["Title"] = "Không có quyền truy cập";
+}
+
+<div class="container">
+    <div class="glass-panel p-4 my-5">
+        <h1 class="h4 fw-bold text-white mb-3">Bạn không có quyền truy cập trang này</h1>
+        <p class="text-muted mb-4">
+            Tài khoản hiện tại không đủ quyền để thực hiện chức năng này. 
+            Nếu bạn nghĩ đây là nhầm lẫn, hãy liên hệ quản trị viên để được cấp quyền phù hợp.
+        </p>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary-modern me-2">Về trang chủ</a>
+        <a asp-controller="Account" asp-action="Profile" class="btn btn-outline-light rounded-pill px-4">Tài khoản của tôi</a>
+    </div>
+</div>
+
+

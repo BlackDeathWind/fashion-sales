@@ -1,0 +1,152 @@
+@model IEnumerable<fashion_sales.Models.Entities.StatisticsDaily>
+@{
+    Layout = "/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Thống kê 7 ngày gần nhất";
+}
+
+<div class="dashboard-page">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h4 fw-bold text-white mb-1">Thống kê 7 ngày gần nhất</h1>
+            <p class="text-muted small mb-0">Tổng quan doanh thu và số đơn hàng theo từng ngày.</p>
+        </div>
+    </div>
+
+    <div class="glass-panel p-4 mb-4">
+        <h2 class="h6 fw-bold mb-3 text-white">Biểu đồ 7 ngày gần nhất</h2>
+        <div class="mb-4">
+            <canvas id="statsChart" height="140"></canvas>
+        </div>
+
+        <h2 class="h6 fw-bold mb-3 text-white">Bảng thống kê</h2>
+        <div class="table-responsive">
+            <table class="table table-modern align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Ngày</th>
+                        <th class="text-center">Số đơn</th>
+                        <th class="text-end">Doanh thu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var s in Model)
+                    {
+                        <tr>
+                            <td>@s.StatDate.ToLocalTime().ToString("dd/MM/yyyy")</td>
+                            <td class="text-center">@s.OrderCount</td>
+                            <td class="text-end">@String.Format("{0:N0}₫", s.TotalRevenue)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="glass-panel p-4">
+        <h2 class="h6 fw-bold mb-3 text-white">Luồng sử dụng trang Thống kê</h2>
+        <ol class="flow-timeline">
+            <li>
+                <div class="flow-title">Kiểm tra sức khỏe kinh doanh</div>
+                <div class="flow-desc text-muted small">
+                    So sánh số đơn hàng và doanh thu từng ngày để phát hiện xu hướng tăng/giảm bất thường.
+                </div>
+            </li>
+            <li>
+                <div class="flow-title">Đánh giá hiệu quả chiến dịch</div>
+                <div class="flow-desc text-muted small">
+                    Sau khi chạy khuyến mãi hoặc chiến dịch marketing, theo dõi 7 ngày gần nhất để đo lường hiệu quả.
+                </div>
+            </li>
+            <li>
+                <div class="flow-title">Lập kế hoạch nhập hàng</div>
+                <div class="flow-desc text-muted small">
+                    Kết hợp với Top sản phẩm ở Dashboard để quyết định tăng/giảm tồn kho cho các nhóm sản phẩm.
+                </div>
+            </li>
+        </ol>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        (function () {
+            const labels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                Model.Select(s => s.StatDate.ToLocalTime().ToString("dd/MM"))
+            ));
+
+            const revenues = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                Model.Select(s => s.TotalRevenue)
+            ));
+
+            const orders = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                Model.Select(s => s.OrderCount)
+            ));
+
+            const ctx = document.getElementById('statsChart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Doanh thu (₫)',
+                            data: revenues,
+                            backgroundColor: 'rgba(249, 115, 22, 0.6)',
+                            borderRadius: 6,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Số đơn',
+                            data: orders,
+                            backgroundColor: 'rgba(59, 130, 246, 0.6)',
+                            borderRadius: 6,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#ffffff',
+                                font: { size: 11 }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#e5e7eb'
+                            },
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            position: 'left',
+                            ticks: {
+                                color: '#e5e7eb'
+                            },
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.3)'
+                            }
+                        },
+                        y1: {
+                            position: 'right',
+                            ticks: {
+                                color: '#e5e7eb'
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            }
+                        }
+                    }
+                }
+            });
+        })();
+    </script>
+}

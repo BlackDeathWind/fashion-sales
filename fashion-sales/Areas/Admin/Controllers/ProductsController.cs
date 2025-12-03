@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace fashion_sales.Areas.Admin.Controllers;
 
 [Area("Admin")]
-[Authorize(Roles = "Admin")]
+[Authorize(Roles = "Admin,Staff")]
 public class ProductsController : Controller
 {
     private readonly ApplicationDbContext _context;

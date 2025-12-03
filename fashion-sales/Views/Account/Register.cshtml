@@ -11,61 +11,61 @@
                 <h3 class="fw-bold">Đăng ký thành viên</h3>
                 <p class="text-muted small">Tạo tài khoản để theo dõi đơn hàng dễ dàng</p>
             </div>
-
-            <form asp-action="Register" method="post" id="registerForm">
+                
+                <form asp-action="Register" method="post" id="registerForm">
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3 small" role="alert"></div>
 
-                <div class="mb-3">
+                    <div class="mb-3">
                     <label asp-for="PhoneOrEmail" class="form-label">Số điện thoại / Email</label>
-                    <input asp-for="PhoneOrEmail" 
+                        <input asp-for="PhoneOrEmail" 
                            class="form-control form-control-modern ps-3" 
                            placeholder="Nhập thông tin liên hệ"
-                           autocomplete="username" />
-                    <span asp-validation-for="PhoneOrEmail" class="text-danger small"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="Password" class="form-label">Mật khẩu</label>
-                    <div class="input-group">
-                        <input asp-for="Password" 
-                               class="form-control form-control-modern ps-3" 
-                               type="password"
-                               id="passwordInput"
-                               placeholder="••••••••"
-                               autocomplete="new-password" />
-                        <button class="btn btn-outline-secondary border-secondary text-white" 
-                                type="button" 
-                                id="togglePassword"
-                                aria-label="Hiển thị mật khẩu">
-                            <i class="ph ph-eye" id="passwordIcon"></i>
-                        </button>
+                               autocomplete="username" />
+                        <span asp-validation-for="PhoneOrEmail" class="text-danger small"></span>
                     </div>
-                    <span asp-validation-for="Password" class="text-danger small"></span>
-                </div>
 
-                <div class="mb-4">
-                    <div class="form-check">
-                        <input asp-for="TermsAccepted" 
-                               class="form-check-input" 
-                               type="checkbox" 
-                               id="termsCheck" />
+                    <div class="mb-3">
+                    <label asp-for="Password" class="form-label">Mật khẩu</label>
+                        <div class="input-group">
+                            <input asp-for="Password" 
+                               class="form-control form-control-modern ps-3" 
+                                   type="password"
+                                   id="passwordInput"
+                               placeholder="••••••••"
+                                   autocomplete="new-password" />
+                        <button class="btn btn-outline-secondary border-secondary text-white" 
+                                    type="button" 
+                                    id="togglePassword"
+                                    aria-label="Hiển thị mật khẩu">
+                            <i class="ph ph-eye" id="passwordIcon"></i>
+                            </button>
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-check">
+                            <input asp-for="TermsAccepted" 
+                                   class="form-check-input" 
+                                   type="checkbox" 
+                                   id="termsCheck" />
                         <label class="form-check-label text-muted small" for="termsCheck">
                             Tôi đồng ý với <a href="#" target="_blank" class="text-white">Điều khoản dịch vụ</a> 
                             và <a href="#" target="_blank" class="text-white">Chính sách bảo mật</a>
-                        </label>
+                            </label>
+                        </div>
+                        <span asp-validation-for="TermsAccepted" class="text-danger small d-block mt-1"></span>
                     </div>
-                    <span asp-validation-for="TermsAccepted" class="text-danger small d-block mt-1"></span>
-                </div>
 
                 <button type="submit" class="btn btn-primary-modern w-100 mb-3">Đăng ký</button>
-            </form>
+                </form>
 
-            <div class="text-center">
+                <div class="text-center">
                 <span class="text-muted small">Đã có tài khoản? </span>
                 <a asp-action="Login" class="text-white small fw-bold">Đăng nhập</a>
+                </div>
             </div>
         </div>
-    </div>
     </div>
 </div>
 

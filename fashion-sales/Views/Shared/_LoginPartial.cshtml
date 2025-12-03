@@ -10,11 +10,16 @@
             @User.Identity?.Name
         </a>
         <ul class="dropdown-menu dropdown-menu-end bg-dark border-secondary" aria-labelledby="userDropdown">
-            <li><a class="dropdown-item text-white" asp-controller="Account" asp-action="Profile">Tài khoản của tôi</a></li>
-            <li><a class="dropdown-item text-white" asp-controller="Order" asp-action="MyOrders">Đơn hàng của tôi</a></li>
+            @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+            {
+                <li><a class="dropdown-item text-white" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Bảng điều khiển</a></li>
+                <li><hr class="dropdown-divider border-secondary" /></li>
+            }
+            <li><a class="dropdown-item text-white" asp-area="" asp-controller="Account" asp-action="Profile">Tài khoản của tôi</a></li>
+            <li><a class="dropdown-item text-white" asp-area="" asp-controller="Order" asp-action="MyOrders">Đơn hàng của tôi</a></li>
             <li><hr class="dropdown-divider border-secondary" /></li>
             <li>
-                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
                     <button type="submit" class="dropdown-item text-white bg-transparent border-0 w-100 text-start">Đăng xuất</button>
                 </form>
             </li>

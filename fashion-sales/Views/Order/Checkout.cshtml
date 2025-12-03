@@ -6,7 +6,7 @@
 <div class="container">
     <h4 class="mb-4 fw-bold">Thông tin giao hàng</h4>
 
-    <div class="row">
+<div class="row">
     <div class="col-lg-7">
         <form asp-action="Checkout" method="post" id="checkoutForm">
             <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
@@ -16,54 +16,54 @@
                 <div class="row g-3 mb-3">
                     <div class="col-md-4">
                         <label asp-for="ProvinceCode" class="form-label">Tỉnh / Thành</label>
-                        <input type="text"
+                <input type="text"
                                class="form-control form-control-modern address-combobox"
-                               id="CheckoutProvinceInput"
-                               list="CheckoutProvinceOptions"
+                       id="CheckoutProvinceInput"
+                       list="CheckoutProvinceOptions"
                                placeholder="Chọn Tỉnh/Thành"
-                               autocomplete="off" />
-                        <datalist id="CheckoutProvinceOptions"></datalist>
-                        <input type="hidden" asp-for="ProvinceCode" id="ProvinceCode" />
-                        <input type="hidden" asp-for="ProvinceName" id="ProvinceName" />
+                       autocomplete="off" />
+                <datalist id="CheckoutProvinceOptions"></datalist>
+                <input type="hidden" asp-for="ProvinceCode" id="ProvinceCode" />
+                <input type="hidden" asp-for="ProvinceName" id="ProvinceName" />
                         <span asp-validation-for="ProvinceCode" class="text-danger small"></span>
-                    </div>
+            </div>
                     <div class="col-md-4">
                         <label asp-for="DistrictCode" class="form-label">Quận / Huyện</label>
-                        <input type="text"
+                <input type="text"
                                class="form-control form-control-modern address-combobox"
-                               id="CheckoutDistrictInput"
-                               list="CheckoutDistrictOptions"
+                       id="CheckoutDistrictInput"
+                       list="CheckoutDistrictOptions"
                                placeholder="Chọn Quận/Huyện"
-                               autocomplete="off"
-                               disabled />
-                        <datalist id="CheckoutDistrictOptions"></datalist>
-                        <input type="hidden" asp-for="DistrictCode" id="DistrictCode" />
-                        <input type="hidden" asp-for="DistrictName" id="DistrictName" />
+                       autocomplete="off"
+                       disabled />
+                <datalist id="CheckoutDistrictOptions"></datalist>
+                <input type="hidden" asp-for="DistrictCode" id="DistrictCode" />
+                <input type="hidden" asp-for="DistrictName" id="DistrictName" />
                         <span asp-validation-for="DistrictCode" class="text-danger small"></span>
-                    </div>
+            </div>
                     <div class="col-md-4">
                         <label asp-for="WardCode" class="form-label">Phường / Xã</label>
-                        <input type="text"
+                <input type="text"
                                class="form-control form-control-modern address-combobox"
-                               id="CheckoutWardInput"
-                               list="CheckoutWardOptions"
+                       id="CheckoutWardInput"
+                       list="CheckoutWardOptions"
                                placeholder="Chọn Phường/Xã"
-                               autocomplete="off"
-                               disabled />
-                        <datalist id="CheckoutWardOptions"></datalist>
-                        <input type="hidden" asp-for="WardCode" id="WardCode" />
-                        <input type="hidden" asp-for="WardName" id="WardName" />
+                       autocomplete="off"
+                       disabled />
+                <datalist id="CheckoutWardOptions"></datalist>
+                <input type="hidden" asp-for="WardCode" id="WardCode" />
+                <input type="hidden" asp-for="WardName" id="WardName" />
                         <span asp-validation-for="WardCode" class="text-danger small"></span>
                     </div>
-                </div>
-                
-                <div class="mb-3">
+            </div>
+
+            <div class="mb-3">
                     <label asp-for="StreetAddress" class="form-label">Địa chỉ cụ thể</label>
                     <input asp-for="StreetAddress" class="form-control form-control-modern" placeholder="Số nhà, tên đường..." />
                     <span asp-validation-for="StreetAddress" class="text-danger small"></span>
-                </div>
+            </div>
 
-                <div class="mb-3">
+            <div class="mb-3">
                     <label asp-for="Note" class="form-label">Ghi chú đơn hàng (Tùy chọn)</label>
                     <textarea asp-for="Note" class="form-control form-control-modern" rows="2" placeholder="Ghi chú..."></textarea>
                     <span asp-validation-for="Note" class="text-danger small"></span>
@@ -85,15 +85,15 @@
     <div class="col-lg-5">
         <div class="glass-panel p-4">
             <h5 class="fw-bold mb-3">Đơn hàng của bạn</h5>
-            @if (!Model.Items.Any())
-            {
+                @if (!Model.Items.Any())
+                {
                 <p class="text-muted">Giỏ hàng trống.</p>
-            }
-            else
-            {
+                }
+                else
+                {
                 <!-- Small Summary List -->
                 @foreach (var item in Model.Items)
-                {
+                    {
                     <div class="d-flex align-items-center justify-content-between mb-3 pb-3 border-bottom border-secondary border-opacity-10">
                         <div class="d-flex align-items-center gap-2">
                             <div class="bg-secondary rounded" style="width:40px;height:40px;"></div>
@@ -110,9 +110,9 @@
 
                 <button type="submit" form="checkoutForm" class="btn btn-primary-modern w-100">Đặt hàng ngay</button>
             }
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 @section Scripts {

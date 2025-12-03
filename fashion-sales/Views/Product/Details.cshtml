@@ -6,13 +6,13 @@
 <div class="container">
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb small">
-            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
-            <li class="breadcrumb-item">
-                <a asp-controller="Category" asp-action="Index" asp-route-id="@Model.CategoryId">@Model.Category.Name</a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
-        </ol>
-    </nav>
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Category" asp-action="Index" asp-route-id="@Model.CategoryId">@Model.Category.Name</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+    </ol>
+</nav>
 
     <div class="row g-5">
     <!-- Left: Images -->
@@ -36,16 +36,16 @@
                 {
                     <span class="position-absolute top-0 start-0 m-3 badge bg-danger rounded-pill px-3 py-2">SALE</span>
                 }
-                @if (!string.IsNullOrEmpty(Model.MainImageUrl))
-                {
+            @if (!string.IsNullOrEmpty(Model.MainImageUrl))
+            {
                     <img src="@Model.MainImageUrl" class="w-100 h-auto d-block" alt="@Model.Name" id="mainProductImage">
-                }
-                else
-                {
+            }
+            else
+            {
                     <div class="w-100 bg-light d-flex align-items-center justify-content-center" style="min-height: 500px;">
                         <span class="text-muted">Ảnh sản phẩm</span>
                     </div>
-                }
+            }
             </div>
         </div>
     </div>
@@ -81,18 +81,18 @@
                 <label class="form-label">Số lượng</label>
                 <div class="d-flex gap-3">
                     <input type="number" name="quantity" value="1" min="1" max="@Model.StockQuantity" class="form-control form-control-modern text-center" style="width: 80px;">
-                    @if (Model.StockQuantity <= 0)
-                    {
+            @if (Model.StockQuantity <= 0)
+            {
                         <button type="submit" class="btn btn-primary-modern flex-grow-1" disabled>
                             <i class="ph-bold ph-shopping-cart me-2"></i> Hết hàng
-                        </button>
-                    }
-                    else
-                    {
+                </button>
+            }
+            else
+            {
                         <button type="submit" class="btn btn-primary-modern flex-grow-1">
                             <i class="ph-bold ph-shopping-cart me-2"></i> Thêm vào giỏ
-                        </button>
-                    }
+                </button>
+            }
                 </div>
             </div>
         </form>

@@ -185,6 +185,13 @@ public class AccountController : Controller
     }
 
     [HttpGet]
+    [AllowAnonymous]
+    public IActionResult AccessDenied()
+    {
+        return View();
+    }
+
+    [HttpGet]
     [Authorize]
     public async Task<IActionResult> Profile()
     {

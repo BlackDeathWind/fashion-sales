@@ -6,23 +6,23 @@
 <div class="container">
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb small">
-            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">@Model.CategoryName</li>
-        </ol>
-    </nav>
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.CategoryName</li>
+    </ol>
+</nav>
 
-    <div class="row">
+<div class="row">
     <!-- Filter Sidebar -->
     <div class="col-md-3 mb-4">
         <div class="filter-panel">
             <h5 class="fw-bold mb-3 text-white">Bộ lọc</h5>
             
-            <form method="get" asp-action="Index" asp-controller="Category" id="filterForm">
-                @if (!string.IsNullOrEmpty(Model.CategorySlug))
-                {
-                    <input type="hidden" name="slug" value="@Model.CategorySlug" />
-                }
-                
+                <form method="get" asp-action="Index" asp-controller="Category" id="filterForm">
+                    @if (!string.IsNullOrEmpty(Model.CategorySlug))
+                    {
+                        <input type="hidden" name="slug" value="@Model.CategorySlug" />
+                    }
+
                 <div class="mb-4">
                     <label class="form-label">Khoảng giá</label>
                     <div class="filter-options">
@@ -62,14 +62,14 @@
                 <div class="mb-3">
                     <label class="form-label">Sắp xếp</label>
                     <select class="form-select form-select-sm form-control-modern" name="sort" onchange="this.form.submit()">
-                        <option value="newest" selected="@(string.IsNullOrEmpty(Model.SortOption) || Model.SortOption == "newest" ? "selected" : null)">Mới nhất</option>
+                            <option value="newest" selected="@(string.IsNullOrEmpty(Model.SortOption) || Model.SortOption == "newest" ? "selected" : null)">Mới nhất</option>
                         <option value="price-asc" selected="@(Model.SortOption == "price-asc" ? "selected" : null)">Giá: Thấp đến Cao</option>
                         <option value="price-desc" selected="@(Model.SortOption == "price-desc" ? "selected" : null)">Giá: Cao đến Thấp</option>
                     </select>
                 </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
     
     <!-- Products Grid -->
     <div class="col-md-9">
@@ -81,18 +81,18 @@
         </div>
         
         <div class="row g-4">
-    @if (!Model.Products.Any())
-    {
+            @if (!Model.Products.Any())
+            {
         <div class="col-12">
             <div class="glass-panel p-5 text-center">
                 <p class="text-muted">Chưa có sản phẩm trong danh mục này.</p>
             </div>
         </div>
-    }
-    else
-    {
-        foreach (var p in Model.Products)
-        {
+            }
+            else
+            {
+                        foreach (var p in Model.Products)
+                        {
             <div class="col-6 col-md-3">
                 <div class="product-card-modern">
                     <div class="product-img-box">
@@ -100,13 +100,13 @@
                         {
                             <span class="position-absolute top-0 start-0 m-2 badge bg-danger rounded-1">GIẢM GIÁ</span>
                         }
-                        <a asp-controller="Product" asp-action="Details" asp-route-id="@p.Id" class="text-decoration-none">
-                            @if (!string.IsNullOrEmpty(p.MainImageUrl))
-                            {
+                                    <a asp-controller="Product" asp-action="Details" asp-route-id="@p.Id" class="text-decoration-none">
+                                    @if (!string.IsNullOrEmpty(p.MainImageUrl))
+                                    {
                                 <img src="@p.MainImageUrl" alt="@p.Name">
-                            }
-                            else
-                            {
+                                    }
+                                    else
+                                    {
                                 <div class="w-100 h-100 bg-light d-flex align-items-center justify-content-center">
                                     <span class="text-muted small">Ảnh sản phẩm</span>
                                 </div>
@@ -136,13 +136,13 @@
                                 <small class="text-muted text-decoration-line-through">@String.Format("{0:N0}₫", p.Price)</small>
                             }
                         </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        }
-    }
+                }
+            }
         </div>
-    </div>
+        </div>
     </div>
 </div>
 

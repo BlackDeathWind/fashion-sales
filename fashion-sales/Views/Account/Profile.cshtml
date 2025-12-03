@@ -4,20 +4,20 @@
 }
 
 <div class="container">
-    <div class="row justify-content-center">
+<div class="row justify-content-center">
     <div class="col-lg-8">
         <div class="glass-panel p-4">
             <h3 class="fw-bold mb-4">Thông tin tài khoản</h3>
-            
-            @if (TempData["SuccessMessage"] != null)
-            {
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    @TempData["SuccessMessage"]
+                
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        @TempData["SuccessMessage"]
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
-                </div>
-            }
+                    </div>
+                }
 
-            <form asp-action="Profile" method="post" id="profileForm">
+                <form asp-action="Profile" method="post" id="profileForm">
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3 small"></div>
 
                 <div class="row g-3 mb-3">
@@ -32,16 +32,16 @@
                         <span asp-validation-for="Email" class="text-danger small"></span>
                         <small class="text-muted small">Email là tùy chọn</small>
                     </div>
-                </div>
+                    </div>
 
-                <div class="mb-3">
+                    <div class="mb-3">
                     <label asp-for="PhoneNumber" class="form-label">Số điện thoại</label>
                     <input asp-for="PhoneNumber" class="form-control form-control-modern" type="tel" />
                     <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
-                </div>
+                    </div>
 
                 <h5 class="fw-bold mt-4 mb-3 fs-6 text-primary">Địa chỉ mặc định</h5>
-                
+
                 <div class="row g-3 mb-3">
                     <div class="col-md-4">
                         <label asp-for="ProvinceCode" class="form-label">Tỉnh / Thành</label>
@@ -84,21 +84,21 @@
                         <input type="hidden" asp-for="WardName" id="WardName" />
                         <span asp-validation-for="WardCode" class="text-danger small"></span>
                     </div>
-                </div>
+                    </div>
 
-                <div class="mb-4">
+                    <div class="mb-4">
                     <label asp-for="StreetAddress" class="form-label">Địa chỉ cụ thể</label>
                     <input asp-for="StreetAddress" class="form-control form-control-modern" placeholder="Số nhà, tên đường..." />
                     <span asp-validation-for="StreetAddress" class="text-danger small"></span>
-                </div>
+                    </div>
 
                 <div class="d-flex justify-content-end gap-3 mt-4">
                     <a asp-controller="Home" asp-action="Index" class="btn btn-outline-light rounded-pill px-4">Hủy</a>
                     <button type="submit" class="btn btn-primary-modern px-4">Cập nhật</button>
-                </div>
-            </form>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
     </div>
 </div>
 

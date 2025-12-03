@@ -1,5 +1,6 @@
 using fashion_sales.Models.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace fashion_sales.Data;
 
@@ -10,6 +11,7 @@ public static class DbInitializer
         using var scope = services.CreateScope();
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 
         string[] roles = { "Admin", "Staff", "Customer" };
 
@@ -21,27 +23,48 @@ public static class DbInitializer
             }
         }
 
-        var adminEmail = "admin@fashionsales.local";
-        var adminUser = await userManager.FindByEmailAsync(adminEmail);
-        if (adminUser == null)
-        {
-            adminUser = new ApplicationUser
-            {
-                UserName = adminEmail,
-                Email = adminEmail,
-                EmailConfirmed = true,
-                FullName = "Quản trị viên",
-                DefaultAddress = "TP. Hồ Chí Minh",
-                IsActive = true
-            };
+        // Thông tin tài khoản seed đọc từ cấu hình (appsettings / secrets), không hard-code trong code
+        var adminEmail = configuration["SeedUsers:Admin:Email"] ?? "admin@fashionsales.local";
+        var adminPassword = configuration["SeedUsers:Admin:Password"] ?? "Admin@12345";
+        var adminFullName = configuration["SeedUsers:Admin:FullName"] ?? "Quản trị viên";
 
-            var result = await userManager.CreateAsync(adminUser, "Admin@12345");
-            if (result.Succeeded)
-            {
-                await userManager.AddToRoleAsync(adminUser, "Admin");
-            }
+        await EnsureUserWithRoleAsync(userManager, adminEmail, adminPassword, adminFullName, "Admin");
+
+        var staffEmail = configuration["SeedUsers:Staff:Email"] ?? "staff@fashionsales.local";
+        var staffPassword = configuration["SeedUsers:Staff:Password"] ?? "Staff@12345";
+        var staffFullName = configuration["SeedUsers:Staff:FullName"] ?? "Nhân viên bán hàng";
+
+        await EnsureUserWithRoleAsync(userManager, staffEmail, staffPassword, staffFullName, "Staff");
+    }
+
+    private static async Task EnsureUserWithRoleAsync(
+        UserManager<ApplicationUser> userManager,
+        string email,
+        string password,
+        string fullName,
+        string role)
+    {
+        var user = await userManager.FindByEmailAsync(email);
+        if (user != null)
+        {
+            return;
+        }
+
+        user = new ApplicationUser
+        {
+            UserName = email,
+            Email = email,
+            EmailConfirmed = true,
+            FullName = fullName,
+            DefaultAddress = "TP. Hồ Chí Minh",
+            IsActive = true
+        };
+
+        var result = await userManager.CreateAsync(user, password);
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(user, role);
         }
     }
 }
-
 

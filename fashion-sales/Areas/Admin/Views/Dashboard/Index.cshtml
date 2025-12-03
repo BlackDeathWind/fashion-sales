@@ -1,9 +1,171 @@
+@model fashion_sales.Models.ViewModels.AdminDashboardViewModel
 @{
     Layout = "/Areas/Admin/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Admin Dashboard";
+    ViewData["Title"] = "Bảng điều khiển";
 }
 
-<h1 class="h4 mb-3">Tổng quan hệ thống</h1>
-<p class="text-muted">Đây là trang dashboard quản trị. Bạn có thể mở rộng thêm các widget thống kê.</p>
+<div class="dashboard-page">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h4 fw-bold text-white mb-1">Bảng điều khiển</h1>
+            <p class="text-muted small mb-0">Tổng quan nhanh về hoạt động bán hàng và vận hành hệ thống.</p>
+        </div>
+    </div>
 
+    @if (User.IsInRole("Admin"))
+    {
+        <!-- Top Stats cho Admin -->
+        <div class="row g-3 mb-4 dashboard-grid">
+            <div class="col-md-3">
+                <div class="stat-card primary">
+                    <div class="stat-label">Doanh thu tích lũy</div>
+                    <div class="stat-value">@String.Format("{0:N0}₫", Model.TotalRevenue)</div>
+                    <div class="stat-sub">Tổng doanh thu từ đơn hoàn tất</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-label">Đơn hàng hôm nay</div>
+                    <div class="stat-value">@Model.TodayOrders</div>
+                    <div class="stat-sub">Doanh thu: @String.Format("{0:N0}₫", Model.TodayRevenue)</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-label">Sản phẩm đang bán</div>
+                    <div class="stat-value">@Model.ActiveProducts</div>
+                    <div class="stat-sub">Tổng sản phẩm: @Model.TotalProducts</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-label">Khách hàng</div>
+                    <div class="stat-value">@Model.UniqueCustomers</div>
+                    <div class="stat-sub">Theo số tài khoản đã đặt hàng</div>
+                </div>
+            </div>
+        </div>
+    }
+    else if (User.IsInRole("Staff"))
+    {
+        <!-- Giao diện đơn giản cho Staff: chỉ 2 chức năng -->
+        <div class="row g-3 mb-4 dashboard-grid">
+            <div class="col-md-6">
+                <a asp-area="Admin" asp-controller="Orders" asp-action="Index" class="text-decoration-none">
+                    <div class="stat-card primary">
+                        <div class="stat-label">Quản lý</div>
+                        <div class="stat-value">Đơn hàng</div>
+                        <div class="stat-sub">Xem và cập nhật trạng thái đơn hàng</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="text-decoration-none">
+                    <div class="stat-card">
+                        <div class="stat-label">Quản lý</div>
+                        <div class="stat-value">Sản phẩm</div>
+                        <div class="stat-sub">Thêm, sửa, ẩn/hiện sản phẩm</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    }
 
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="row g-4">
+            <!-- Orders Status & Flow -->
+            <div class="col-lg-7">
+                <div class="glass-panel p-4 h-100">
+                    <h2 class="h6 fw-bold mb-3 text-white">Trạng thái xử lý đơn hàng</h2>
+                    <div class="row g-3 mb-4">
+                        <div class="col-6 col-md-3">
+                            <div class="badge-pill bg-warning-subtle text-warning">
+                                Chờ xử lý
+                                <span class="d-block fw-bold text-white mt-1">@Model.PendingOrders</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="badge-pill bg-info-subtle text-info">
+                                Đang xử lý
+                                <span class="d-block fw-bold text-white mt-1">@Model.ProcessingOrders</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="badge-pill bg-success-subtle text-success">
+                                Hoàn tất
+                                <span class="d-block fw-bold text-white mt-1">@Model.CompletedOrders</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="badge-pill bg-danger-subtle text-danger">
+                                Đã hủy
+                                <span class="d-block fw-bold text-white mt-1">@Model.CancelledOrders</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="h6 fw-bold mb-3 text-white">Luồng xử lý & vận hành</h3>
+                    <ol class="flow-timeline">
+                        <li>
+                            <div class="flow-title">Flow xử lý đơn hàng (Staff/Admin)</div>
+                            <div class="flow-desc text-muted small">
+                                Tiếp nhận đơn mới tại <code>Admin/Orders</code>, cập nhật trạng thái Pending → Processing/Shipping → Completed hoặc Cancelled theo thực tế giao hàng.
+                            </div>
+                        </li>
+                        <li>
+                            <div class="flow-title">Flow quản lý danh mục & sản phẩm (Staff/Admin)</div>
+                            <div class="flow-desc text-muted small">
+                                Thêm/sửa/xóa danh mục tại <code>Admin/Categories</code> và sản phẩm tại <code>Admin/Products</code>, đảm bảo <strong>IsActive</strong> chính xác để hiển thị ngoài website.
+                            </div>
+                        </li>
+                        <li>
+                            <div class="flow-title">Flow thống kê & giám sát</div>
+                            <div class="flow-desc text-muted small">
+                                Theo dõi doanh thu, đơn hàng, top sản phẩm tại Dashboard và trang <code>Admin/Statistics</code> để đưa ra quyết định về nhập hàng, khuyến mãi.
+                            </div>
+                        </li>
+                        <li>
+                            <div class="flow-title">Flow quản lý tài khoản (Admin)</div>
+                            <div class="flow-desc text-muted small">
+                                Quản lý user, phân quyền Staff/Admin, khóa hoặc mở tài khoản tại <code>Admin/Users</code> để bảo mật hệ thống.
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Top Products -->
+            <div class="col-lg-5">
+                <div class="glass-panel p-4 h-100">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 class="h6 fw-bold mb-0 text-white">Top sản phẩm bán chạy</h2>
+                        <span class="text-muted small">Top 5 theo số lượng bán</span>
+                    </div>
+
+                    @if (!Model.TopProducts.Any())
+                    {
+                        <p class="text-muted small mb-0">Chưa có dữ liệu đơn hàng để thống kê.</p>
+                    }
+                    else
+                    {
+                        <div class="list-group list-group-flush dashboard-top-products">
+                            @foreach (var p in Model.TopProducts)
+                            {
+                                <div class="list-group-item bg-transparent border-secondary border-opacity-25 px-0 d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="text-white fw-semibold small">@p.Name</div>
+                                        <div class="text-muted small">Đã bán: @p.QuantitySold · Doanh thu: @String.Format("{0:N0}₫", p.Revenue)</div>
+                                    </div>
+                                    <a asp-area="Admin" asp-controller="Products" asp-action="Edit" asp-route-id="@p.ProductId" class="btn btn-sm btn-outline-light rounded-pill px-3">
+                                        Chi tiết
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
