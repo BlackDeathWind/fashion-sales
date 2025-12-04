@@ -1,11 +1,9 @@
-## Kế hoạch triển khai hệ thống bán hàng thời trang (fashion-sales)
-
-### 1. Yêu cầu môi trường
+I. Yêu cầu môi trường
 
 - .NET SDK 8.0.401 <--- Lưu ý.
 - MySQL Server 8.x, tài khoản `root` mật khẩu `xxx` (chỉnh lại trong `appsettings.json`).
 
-### 2. Chuẩn bị cơ sở dữ liệu
+II. Chuẩn bị cơ sở dữ liệu
 
 1. Mở MySQL client (MySQL Workbench / CLI).
 2. Chạy script:
@@ -18,13 +16,13 @@
 5. Chạy tiếp:
    - `scripts/04_seed_data.sql` để thêm danh mục và sản phẩm mẫu.
 
-### 3. Chạy ứng dụng
+III. Chạy ứng dụng
 
 1. Từ thư mục `fashion-sales`:
    - `dotnet run`
 2. Mở trình duyệt tại `https://localhost:xxxxx` (port do ASP.NET Core cung cấp).
 
-### 4. Tài khoản và phân quyền
+IV. Tài khoản và phân quyền
 
 - Khi ứng dụng khởi động, `DbInitializer.SeedAsync` sẽ:
   - Tạo các role: `Admin`, `Staff`, `Customer`.
@@ -32,19 +30,23 @@
     - Email: `admin@fashionsales.local`
     - Mật khẩu: `Admin@12345`
     - Được gán role `Admin`.
+  - Tạo tài khoản staff mặc định:
+    - Email: `staff@fashionsales.local`
+    - Mật khẩu: `Staffn@12345`
+    - Được gán role `Staff`.
 - Người dùng đăng ký mới qua giao diện Identity sẽ được gán role `Customer` (cần cấu hình thêm nếu chưa).
 - Tài khoản Staff có thể được tạo bởi Admin trong module quản lý tài khoản (phần Admin).
 
-### 5. Chức năng chính đã triển khai
+V. Chức năng chính đã triển khai
 
-- **Guest/Customer**:
+- Guest/Customer:
   - Trang chủ (`Home/Index`) với banner, danh mục nổi bật, khu vực sản phẩm nổi bật.
   - Duyệt danh mục (`Category/Index`) với grid sản phẩm, nút thêm vào giỏ.
   - Chi tiết sản phẩm (`Product/Details`) với gallery ảnh, thông tin, nút thêm giỏ.
   - Tìm kiếm sản phẩm (`Product/Search`).
   - Giỏ hàng (`Cart/Index`) lưu bằng session, cho phép chỉnh số lượng, xóa.
   - Đặt hàng (`Order/Checkout`), thanh toán giả lập, trang thành công, lịch sử đơn (`Order/MyOrders`).
-- **Admin**:
+- Admin:
   - Area Admin với Dashboard cơ bản.
   - Màn hình danh sách sản phẩm/danh mục (xem nhanh, có thể mở rộng CRUD).
 
